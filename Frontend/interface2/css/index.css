@@ -1,0 +1,18 @@
+.newBoardTitle {
+    display: flex;
+    flex-direction: column;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.add-board-form {
+    max-width: 1000px;
+    margin: auto;
+    padding-inline: 5rem;
+}
+
+.add-board-buttons-section {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+}

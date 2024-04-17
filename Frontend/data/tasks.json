@@ -1,0 +1,108 @@
+[
+    {
+        "id": "tag1",
+        "order": 1,
+        "status": "pending",
+        "title": "Team Meeting",
+        "description": "Discuss project updates and next steps",
+        "endTime": "2024-03-15T10:00:00",
+        "members": [
+            "John",
+            "Alice",
+            "David"
+        ],
+        "colour": "primary",
+        "boardId": "1"
+    },
+    {
+        "id": "tag2",
+        "order": 2,
+        "status": "current",
+        "title": "Team Meeting",
+        "description": "Discuss project updates and next steps",
+        "endTime": "2024-03-15T10:00:00",
+        "members": [
+            "John",
+            "Alice",
+            "David"
+        ],
+        "colour": "light",
+        "boardId": "1"
+    },
+    {
+        "id": "tag3",
+        "order": 3,
+        "status": "pending",
+        "title": "Training Session",
+        "description": "Discuss project updates and next steps",
+        "endTime": "2024-03-15T10:00:00",
+        "members": [
+            "John",
+            "Alice",
+            "David"
+        ],
+        "colour": "success",
+        "boardId": "1"
+    },
+    {
+        "id": "tag4",
+        "order": 4,
+        "status": "current",
+        "title": "Team Meeting",
+        "description": "Discuss project updates and next steps",
+        "endTime": "2024-03-15T10:00:00",
+        "members": [
+            "John",
+            "Alice",
+            "David"
+        ],
+        "colour": "warning",
+        "boardId": "1"
+    },
+    {
+        "id": "tag5",
+        "order": 1,
+        "status": "complete",
+        "title": "Client Presentation",
+        "description": "Present new product features to the client",
+        "endTime": "2024-03-20T15:30:00",
+        "members": [
+            "Emily",
+            "Michael",
+            "Sarah",
+            "Tom"
+        ],
+        "colour": "danger",
+        "boardId": "1"
+    },
+    {
+        "id": "tag6",
+        "order": 2,
+        "status": "complete",
+        "title": "Training Session",
+        "description": "Training session for new employees",
+        "endTime": "2024-03-25T09:00:00",
+        "members": [
+            "Lucas",
+            "Sophia",
+            "Oliver"
+        ],
+        "colour": "warning",
+        "boardId": "2"
+    },
+    {
+        "id": "tag7",
+        "order": 1,
+        "status": "complete",
+        "title": "Project Review",
+        "description": "Review progress and address any issues",
+        "endTime": "2024-03-18T11:00:00",
+        "members": [
+            "Ella",
+            "Jack",
+            "Ava"
+        ],
+        "colour": "danger",
+        "boardId": "2"
+    }
+]
