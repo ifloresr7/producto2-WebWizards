@@ -1,5 +1,3 @@
-const { mergeSchemas } = require('@graphql-tools/schema')
-const {buildSchema} = require('graphql');
 require('graphql-import-node/register');
 
 const boardTypeDefs = require('./types/board.types.js');
