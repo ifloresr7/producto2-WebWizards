@@ -1,22 +1,29 @@
 const express = require('express')
-const test = require('./src/routes/test')
 const dotenv = require('dotenv')
-const connectDB = require('./src/db/config')
+const config = require('./src/config')
+const { ApolloServer } = require('apollo-server-express')
+const { typeDefs, mergedResolvers } = require('./src/graphql')
+const userRouter = require('./src/routes/user')
+
 
 dotenv.config()
-
 const app = express()
-const port = 5000
+app.use(express.json())
+config.connectDB()
 
-connectDB()
+async function startApolloServer(typeDefs, resolvers) {
+    const server = new ApolloServer({ typeDefs, resolvers })
+    await server.start()
+    server.applyMiddleware({ app })
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
+    module.exports = server
+}
 
-app.use('/test', test)
+startApolloServer(typeDefs, mergedResolvers)
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.use('/user', userRouter)
+
+app.listen(config.port, () => {
+    console.log(`Example app listening at http://localhost:${config.port}`)
 })
 
