@@ -19,15 +19,19 @@
       </div>
       <div class="form-floating mb-3">
         <input type="password" class="form-control" id="inputPassword" placeholder="Introduce aquí tu contraseña" required>
-        <label for="inputPassword">Contraseña:</label>
+        <label for="inputPassword">Introduce ontraseña:</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="inputPasswordRepeat" placeholder="Repite la contraseña" required>
+        <label for="inputPasswordRepeat">Repite contraseña:</label>
       </div>
       <p class="error" id="error"></p>
       <p>¿Tienes cuenta? <a href="./login.html">¡Inicia sesión!</a></p>
-      <button type="submit" id="register" class="btn btn-primary">Entrar</button>
+      <button type="submit" id="register" class="btn btn-primary">Registrarme</button>
     </form>
   </main>
   <div id="footer-container"></div>
   <script type="module" src="./common/js/index.js"></script>
-  <script src="./register/js/registerXMLHttpRequest.js"></script>
+  <script src="./register/js/registerHttpRequest.js"></script>
 </body>
 </html>

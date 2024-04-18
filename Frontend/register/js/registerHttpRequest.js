@@ -11,12 +11,15 @@ document.addEventListener("DOMContentLoaded", function () {
         evt.preventDefault();
         let emailValue = document.getElementById('inputEmail').value;
         let passwordValue = document.getElementById('inputPassword').value;
-
-        if (!emailValue || !passwordValue) {
+        let inputPasswordRepeat = document.getElementById('inputPasswordRepeat').value;
+        if (!emailValue || !passwordValue || !inputPasswordRepeat) {
             document.getElementById('error').innerHTML = "Por favor, completa todos los campos requeridos.";
             return;
         }
-
+        if(passwordValue != inputPasswordRepeat){
+            document.getElementById('error').innerHTML = "Las contraseñas no coinciden.";
+            return;
+        }
         let data = {
             email: emailValue,
             password: passwordValue

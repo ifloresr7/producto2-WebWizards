@@ -1,3 +1,5 @@
+import {getBoards} from './HttpRequest.js'
+
 export async function createBoards() {
     let deleteIconHTML = ""
 
@@ -19,8 +21,8 @@ export async function createBoards() {
     const boardsSection = document.getElementById("board-container");
 
     // Obtiene los datos de los tableros desde el almacenamiento de sesión.
-    const boards = JSON.parse(sessionStorage.getItem("boards"));
-
+    const boards = getBoards();
+    console.log(boards);
     // Genera el HTML para cada tablero.
     const htmlBoards = boards.map(board => {
         // Establece la URL de la imagen del tablero o una imagen predeterminada si no se proporciona.
