@@ -4,9 +4,13 @@ const userTypeDefs = `
         email: String!
         password: String!
     }
-
+    input UserInput {
+        email: String!
+        password: String!
+    }
     type Query {
-        showUsers: String
+        loginUser(userInput: UserInput!): User
+        showUsers: [User]
     }
 
     type Mutation {
