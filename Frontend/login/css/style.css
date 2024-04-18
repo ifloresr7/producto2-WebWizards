@@ -20,3 +20,5 @@ form.login {
     display: grid;
     gap: 7px;
 }
+
+.error{color:red}
