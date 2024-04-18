@@ -45,6 +45,7 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
+        console.log(req);
         const { email, password } = req.body
 
         const query = queries.getUser
