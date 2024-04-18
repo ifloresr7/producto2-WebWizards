@@ -26,7 +26,9 @@ const createUser = async (req, res) => {
 
         // Devolver boards y token
 
-        return res.status(200).json(response.data.data.addUser);
+        const user = response.data.data.addUser
+
+        return res.status(200).json({ data: user });
 
     } catch(error) {
         console.log(error)
