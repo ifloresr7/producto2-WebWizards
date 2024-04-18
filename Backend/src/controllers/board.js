@@ -25,9 +25,9 @@ const getBoards = async (req, res) => {
 
     try {
         const { id } = req.query
-        
-        const query = queries.getBoardsByID
-        
+
+        const query = queries.getBoardsByUserID
+
         const variables = { id }
         
         const response = await axios.post('http://localhost:5000/graphql', {
@@ -39,11 +39,11 @@ const getBoards = async (req, res) => {
             return res.status(400).json({ error: 'Error obteniendo boards'})
         }
         
-        const boards = response.data.data.getBoardsByID
+        const boards = response.data.data.getBoardsByUserID
         
         return res.status(200).json({ data: boards })
     } catch (error) {
-        console.log("Error al traernos a los usuarios")
+        console.log("Error al traernos los boards")
         return res.status(400).json({ error: 'Error obteniendo boards'})
     }
 
