@@ -4,9 +4,11 @@ const config = require('./src/config')
 const userRouter = require('./src/routes/user')
 const { ApolloServer } = require('apollo-server-express')
 const { typeDefs, mergedResolvers } = require('./src/graphql')
+const cors = require('cors')
 
 dotenv.config()
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 config.connectDB()
