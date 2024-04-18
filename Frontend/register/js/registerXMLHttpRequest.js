@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let emailValue = document.getElementById('inputEmail').value;
-    let passwordValue = document.getElementById('inputPassword').value;
-    let data = {
-        email: emailValue,
-        password: passwordValue
-    }
-    document.querySelector("input[type=submit]").addEventListener("click", function (evt) {
+    document.getElementById('register').addEventListener("click", function (evt) {
         evt.preventDefault();
+        let emailValue = document.getElementById('inputEmail').value;
+        let passwordValue = document.getElementById('inputPassword').value;
+        let data = {
+            email: emailValue,
+            password: passwordValue
+        };
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://localhost:5000/user/login", true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -17,5 +17,5 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
         xhr.send(JSON.stringify(data));
-    })
+    });
 });
