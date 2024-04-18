@@ -76,14 +76,22 @@ const boardResolvers = {
             }
         },
         deleteBoard: async (_, {id}) => { 
-            
+
             try {
                 const board = await Board.findByIdAndDelete(id)
-                board.deleteOne()
+                if (board == null){
+                    const error = new Error('');
+                    error.status = 404
+                    throw error 
+                }
                 return "Tablero borrado correctamente";
               } catch(error) {
                 console.error("Error al eliminar tablero:", error);
-                throw new Error('Error al eliminar tablero');
+                if (error.status == 404) {
+                    throw new Error ("El tablero no existe.")
+                } else{
+                    throw new Error('Error al eliminar tablero');
+                }
               }
           }
     }

@@ -33,12 +33,20 @@ const task = {
             
             try {
                 const task = await Task.findByIdAndDelete(id)
-                task.deleteOne()
+                if (task == null){
+                    const error = new Error('');
+                    error.status = 404
+                    throw error 
+                }
                 return "Tarea borrada correctamente";
               } catch(error) {
                 console.error("Error al eliminar tarea:", error);
-                throw new Error('Error al eliminar tarea');
-              }
+                if (error.status == 404) {
+                    throw new Error ("La tarea no existe.")
+                } else{
+                    throw new Error('Error al eliminar tarea');
+                }
+            }
           }
     }
 }
