@@ -1,10 +1,10 @@
 const getUser = `
-query LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-        email
-        password
+query ($userInput: UserInput!) {
+    loginUser(userInput: $userInput) {
+      id
+      email
     }
-}
+  }
 `
 
 const queries = {

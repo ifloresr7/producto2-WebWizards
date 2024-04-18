@@ -1,5 +1,4 @@
 const axios = require('axios')
-const queries = require('../services/queries')
 
 const createUser = async (req, res) => {
     
@@ -49,7 +48,18 @@ const loginUser = async (req, res) => {
         console.log(req);
         const { email, password } = req.body
 
-        
+        const query = queries.getUser
+
+        const variables = { email, password }
+
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query,
+            variables
+        })
+
+        const user = response.data.data.loginUser
+
+        console.log("el user es : ", user)
 
         if (response.data.errors) {
             res.status(400).send('Error al iniciar sesión')
@@ -58,7 +68,7 @@ const loginUser = async (req, res) => {
         // Crear autentificación usuario con JWT
 
 
-        // Hacer next para buscar boards de usuario
+        req.userData = user
         next()
 
     } catch(error) {
