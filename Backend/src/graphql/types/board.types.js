@@ -15,6 +15,7 @@ const boardTypeDefs = `
     type Query {
         countBoards: Int
         getBoardsByID (id: ID!): [Board]
+        getTasksIDBoard (id: ID!): [Board]
         showBoards: [Board]
     }
     type Mutation {

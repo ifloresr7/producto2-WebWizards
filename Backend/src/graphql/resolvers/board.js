@@ -1,5 +1,7 @@
 const Board = require("../../db/models/board.model")
 const User = require("../../db/models/user.model")
+const Task = require("../../db/models/task.model")
+
 
 const boardResolvers = {
     Query: {
@@ -20,10 +22,19 @@ const boardResolvers = {
                 const boards = await Board.find();
                 return boards;
               } catch (error) {
-                console.error("Error al obtener usuarios:", error);
-                throw new Error('Error al obtener usuarios');
+                console.error("Error al obtener tableros:", error);
+                throw new Error('Error al obtener tableros');
               }
-        }
+        },
+        getTasksIDBoard: async (_, { id }) => {
+            try {
+                const board = await Board.findById(id);
+                return [board];
+            }catch (error) {
+                console.error("Error al obtener la información del tablero:", error);
+                throw new Error('Error al obtener la información del tablero');
+            }
+        },
     },
     Board: {
         members: async (parent, args, context) => {
