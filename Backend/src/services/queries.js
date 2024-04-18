@@ -12,10 +12,7 @@ const getBoardsByUserID = `
             id
             title
             description
-            members {
-            id
-            email
-            }
+            image
         }
     }
 `

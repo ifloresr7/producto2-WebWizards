@@ -56,6 +56,13 @@ const getBoards = async (req, res) => {
 
 }
 
+const getBoardData = async (req, res) => {
+    const id = req.params.id
+
+
+}
+
+
 const deleteBoard = async (req, res) => {
     const { id } = req.body
 
@@ -85,5 +92,6 @@ const deleteBoard = async (req, res) => {
 module.exports = {
     createBoard,
     getBoards,
+    getBoardData,
     deleteBoard
 }
