@@ -11,7 +11,7 @@ export async function createBoards() {
         const boardHTML = `
             <div class="card" style="width: 20rem;">
                 <a id="${board.id}" boardTitle="${board.title}" class="delete-board-button">Eliminar</a>
-                <img src="board.image" class="card-img-top board-image" alt="...">
+                <img src="${board.image}" class="card-img-top board-image" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${board.title}</h5>
                     <p class="card-text">${board.description}</p>
