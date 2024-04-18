@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             password: passwordValue
         };
         fetch("http://localhost:5000/user/login", {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
