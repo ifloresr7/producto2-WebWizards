@@ -44,6 +44,7 @@ const createUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
+    console.log("entra al login")
     try {
         console.log(req);
         const { email, password } = req.body
