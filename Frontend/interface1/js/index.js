@@ -15,6 +15,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     //Se crean los tableros
     await createBoards();
 });
-
-
-
