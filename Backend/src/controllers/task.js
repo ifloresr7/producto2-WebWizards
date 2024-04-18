@@ -1,9 +1,11 @@
+const task = require("../graphql/resolvers/task")
+const { getBoard } = require("../services")
 const mutations = require("../services/mutations")
 const axios = require('axios')
 
-const createtask = async (req, res) => {
+const createtask = async (req, res, next) => {
     try {
-        const { title, description, status, order, colour, endTime, members } = req.body
+        const { boardId, title, description, status, order, colour, endTime, members } = req.body
     
         const mutation = mutations.addTask
 
@@ -22,7 +24,9 @@ const createtask = async (req, res) => {
             return res.status(400).send({ error: 'Error al crear la tarea' })
         }
     
-        return res.status(200).json({ message: "Tarea creada correctamente" })
+        req.boardId = boardId
+        req.taskId = response.data.data.addTask
+        next()
     } catch (error) {
         console.log(error)
         console.log("Error al crear la tarea")
@@ -30,4 +34,63 @@ const createtask = async (req, res) => {
     }
 }
 
-module.exports = { createtask }
+const deleteAllTasksFromBoard = async (req, res, next) => {
+    try {
+        const { boardId } = req.query
+
+        const board = await getBoard(boardId)
+
+        if (!board) {
+            return res.status(401).send('El tablero no existe')
+        }
+
+        const tasksIds = board.tasks.map(task => task.id)
+
+        const mutation = mutations.deleteAllTasksFromBoard
+
+        const variables = { tasksIds }
+
+        console.log(variables)
+
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query: mutation,
+            variables
+        })
+
+        if (response.data.errors) {
+            return res.status(400).send({ error: 'Error al borrar las tareas del tablero' })
+        }
+
+        req.boardId = boardId
+        next()
+    } catch (error) {
+        console.log("Error al borrar las tareas del tablero")
+        return res.status(400).json({ error: 'Error al borrar las tareas del tablero' })
+    }
+}
+
+const deleteTask = async (req, res) => {
+    try {
+        const { taskId } = req.query
+
+        const mutation = mutations.deleteTask
+
+        const variables = { id: taskId }
+
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query: mutation,
+            variables
+        })
+
+        if (response.data.errors) {
+            return res.status(400).send({ error: 'Error al borrar la tarea' })
+        }
+
+        res.status(200).send('Tarea borrada correctamente')
+    } catch (error) {
+        console.log("Error al borrar la tarea")
+        return res.status(400).json({ error: 'Error al borrar la tarea' })
+    }
+}
+
+module.exports = { createtask, deleteAllTasksFromBoard, deleteTask }

@@ -1,14 +1,13 @@
 const axios = require('axios')
 const mutations = require('../services/mutations')
 const queries = require('../services/queries')
+const { getBoard } = require('../services')
 
 const createBoard = async (req, res) => {
     try {
         const { title, description, members, tasks, image } = req.body
     
         const mutation = mutations.addBoard
-
-        console.log(mutation)
     
         const variables = {
             boardInput: {
@@ -73,45 +72,50 @@ const getBoardData = async (req, res) => {
     try {
         const id = req.params.id
     
-        const query = queries.getDataByBoardID
-    
-        const variables = { id }
-    
-        const response = await axios.post('http://localhost:5000/graphql', {
-            query,
-            variables
-        })
-
-        if (response.data.errors) {
-            return res.status(400).json({ error: 'Error obteniendo datos del board'})
-        }
-
-        const board = response.data.data.getDataByBoardID
+        const board = await getBoard(id)
 
         return res.status(200).json({ data: board })
     } catch(error) {
+        console.log(error)
         console.log("Error al traernos los datos del board")
         return res.status(400).json({ error: 'Error obteniendo datos del board'})
     }
 }
 
+const addtaskToBoard = async (req, res) => {
+    try {
+        const { boardId, taskId } = req
+
+        const mutation = mutations.addTaskToBoard
+
+        const variables = { boardId, taskId }
+
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query: mutation,
+            variables
+        })
+
+        if (response.data.errors) {
+            return res.status(400).json({ error: 'Error añadiendo tarea al board'})
+        }
+        
+        return res.status(200).json({ message: "Tarea creada correctamente" })
+    } catch(error) {
+        console.log("Error al añadir tarea al board: \n", error)
+        return res.status(400).json({ error: 'Error añadiendo tarea al board'})
+    }
+}
+
 const deleteBoard = async (req, res) => {
     try {
-        const { id } = req.body
-    
-        const query = `
-            mutation DeleteBoards($id: ID!) {
-                deleteBoards(id: $id) {
-                    title
-                    description
-                }
-            }
-        `
-    
-        const variables = { id }
+        const { boardId } = req
+       
+        const mutation = mutations.deleteBoard
+
+        const variables = { id: boardId }
     
         const response = await axios.post('http://localhost:5000/graphql', {
-            query,
+            query: mutation,
             variables
         })
     
@@ -130,5 +134,6 @@ module.exports = {
     createBoard,
     getBoards,
     getBoardData,
-    deleteBoard
+    deleteBoard,
+    addtaskToBoard
 }

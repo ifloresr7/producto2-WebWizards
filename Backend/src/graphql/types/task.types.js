@@ -31,13 +31,14 @@ input taskInput {
 }
 
 type Query {
-        showTasks: [Task]
-    }
+    showTasks: [Task]
+}
 
-    type Mutation {
-        addTask(taskInput: taskInput!): String
-        deleteTask(id: ID!): String
-    }
+type Mutation {
+    addTask(taskInput: taskInput!): ID
+    deleteTask(id: ID!): String
+    deleteAllTasksFromBoard(tasksIds: [ID]!): String
+}
 `
 
 module.exports = taskTypeDefs

@@ -1,6 +1,7 @@
 const Board = require("../../db/models/board.model")
 const User = require("../../db/models/user.model")
-const Task = require("../../db/models/task.model")
+const Task = require("../../db/models/task.model");
+const { addTask } = require("../../services/mutations");
 
 
 const boardResolvers = {
@@ -76,7 +77,6 @@ const boardResolvers = {
             }
         },
         deleteBoard: async (_, {id}) => { 
-
             try {
                 const board = await Board.findByIdAndDelete(id)
                 if (board == null){
@@ -93,7 +93,20 @@ const boardResolvers = {
                     throw new Error('Error al eliminar tablero');
                 }
               }
-          }
+        },
+        addTaskToBoard: async (_, { boardId, taskId }) => {
+            try {
+                const board = await Board.findById(boardId)
+
+                board.tasks.push(taskId)
+
+                board.save()
+
+                return "Tarea añadida correctamente al tablero";
+            } catch (error) {
+                return error
+            }
+        }
     }
 };
 

@@ -15,6 +15,15 @@ const task = {
         },
         
     },
+    Task: {
+        members: async (parent, args, context) => {
+          const memberIds = parent.members;
+    
+          const members = await User.find({ _id: { $in: memberIds } });
+    
+          return members;
+        },
+    },
     Mutation: {
         addTask: async (_, {taskInput}) => {
         const { title, description, status, order, colour, endTime, members } = taskInput;
@@ -23,7 +32,7 @@ const task = {
             try {
                 const task = await Task.create({ title, description, status, order, colour, endTime, members })
                 task.save()
-                return "Tarea creada correctamente";
+                return task.id;
             } catch(error) {
                 console.log(error)
                 throw new Error('Error creating user')
@@ -39,7 +48,7 @@ const task = {
                     throw error 
                 }
                 return "Tarea borrada correctamente";
-              } catch(error) {
+            } catch(error) {
                 console.error("Error al eliminar tarea:", error);
                 if (error.status == 404) {
                     throw new Error ("La tarea no existe.")
@@ -47,7 +56,16 @@ const task = {
                     throw new Error('Error al eliminar tarea');
                 }
             }
-          }
+        },
+        deleteAllTasksFromBoard: async (_, { tasksIds }) => {
+            try {
+                await Task.deleteMany({ _id: { $in: tasksIds } });
+                return 'Se han eliminado las tareas relacionadas';
+            } catch (error) {
+                console.error('Ha habido un error eliminando las tareas de un tablero:', error);
+                throw new Error('Ha habido un error eliminando las tareas de un tablero');
+            }
+        }
     }
 }
 
