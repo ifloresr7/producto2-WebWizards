@@ -7,15 +7,24 @@ document.addEventListener("DOMContentLoaded", function () {
             email: emailValue,
             password: passwordValue
         };
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:5000/user/login", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);
+        fetch("http://localhost:5000/user/login", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
             }
-        };
-        xhr.send(JSON.stringify(data));
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 });
