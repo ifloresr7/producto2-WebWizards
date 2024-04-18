@@ -1,9 +1,23 @@
 const User = require('../../db/models/user.model')
 
-const user = {
+const userResolvers = {
     Query: {
-        showUsers() {
-            return "showUsers"
+        showUsers: () => {
+        
+            return [User]
+        },
+        loginUser: async (_,{ userInput }) => {
+            const { email, password } = userInput;
+            try {
+                const user = await User.findOne({ email });
+                if (!user || user.password !== password) {
+                  throw new Error('Contraseña incorrecta');
+                }
+    
+                return user;
+              } catch (error) {
+                throw new Error(error.message);
+              }
         }
     },
     Mutation: {
@@ -24,4 +38,4 @@ const user = {
     }
 }
 
-module.exports = user
+module.exports = userResolvers
