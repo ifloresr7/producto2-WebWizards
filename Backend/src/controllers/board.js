@@ -22,24 +22,30 @@ const createBoard = async (req, res) => {
 }
 
 const getBoards = async (req, res) => {
-    const { id } = req.params
 
-    const query = queries.getBoardsByID
-
-    const variables = { id }
-
-    const response = await axios.post('http://localhost:5000/graphql', {
-        query,
-        variables
-    })
-
-    if (response.data.errors) {
+    try {
+        const { id } = req.query
+        
+        const query = queries.getBoardsByID
+        
+        const variables = { id }
+        
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query,
+            variables
+        })
+        
+        if (response.data.errors) {
+            return res.status(400).json({ error: 'Error obteniendo boards'})
+        }
+        
+        const boards = response.data.data.getBoardsByID
+        
+        return res.status(200).json({ data: boards })
+    } catch (error) {
+        console.log("Error al traernos a los usuarios")
         return res.status(400).json({ error: 'Error obteniendo boards'})
     }
-
-    const boards = response.data.data.getBoardsByID
-
-    return res.status(200).json({ data: boards })
 
 }
 
