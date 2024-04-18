@@ -1,36 +1,56 @@
-document.addEventListener("DOMContentLoaded", function () {   
-    document.getElementById('createBoard').addEventListener("click", function (evt) {
-        evt.preventDefault();
-        let titleValue = document.getElementById('title').value;
-        let descriptionValue = document.getElementById('description').value;
-        let memberValue = document.getElementById('members').value;
-        let IMG64 = null;
-
-        document.getElementById('image').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    IMG64 = event.target.result;
-                    console.log(IMG64);
-                };
-                reader.readAsDataURL(file);
+export function createBoard() {
+    return new Promise(async (resolve, reject) => {
+        if (!sessionStorage.getItem('session')) {
+            reject(new Error("No hay sesión almacenada en sessionStorage."));
+            return;
+        }
+        const dataString = sessionStorage.getItem('session');
+        if (!dataString) {
+            reject(new Error("No se encontraron datos en sessionStorage para la clave 'session'."));
+            return;
+        }
+        const parsedData = JSON.parse(dataString);
+        if (!parsedData || !parsedData.data || !parsedData.data.id) {
+            reject(new Error("El objeto 'data' no tiene la estructura esperada."));
+            return;
+        }
+        const titleValue = document.getElementById('title').value;
+        const descriptionValue = document.getElementById('description').value;
+        const memberValue = document.getElementById('members').value;
+        const imageInput = document.getElementById('image');
+        const file = imageInput.files[0];
+        let imageValue = null;
+        if (file) {
+            if (file.size > 100 * 1024) { // Size in bytes, 100KB = 100 * 1024 bytes
+                document.getElementById('error').innerHTML = "La imagen seleccionada excede el tamaño máximo permitido de 100KB.";
+                return;
             }
-        });
-
-        // Validar que los campos requeridos no estén vacíos
-        if (!titleValue || !descriptionValue || !imageValue || !memberValue) {
-            document.getElementById('error').innerHTML = "Por favor, completa todos los campos requeridos.";
-            return; // Detener el flujo de la función si hay campos vacíos
+            try {
+                imageValue = await readFileAsync(file);
+            } catch (error) {
+                console.error(error);
+                reject(error);
+                return;
+            }
+        } else {
+            document.getElementById('error').innerHTML = "Por favor, selecciona una imagen .jpg";
+            reject(new Error("No se seleccionó una imagen."));
+            return;
         }
 
-        let data = {
+        if (!titleValue || !descriptionValue || !imageValue || !memberValue) {
+            document.getElementById('error').innerHTML = "Por favor, completa todos los campos requeridos.";
+            reject(new Error("Todos los campos son requeridos."));
+            return;
+        }
+
+        const data = {
             title: titleValue,
             description: descriptionValue,
             image: imageValue,
-            members:[] 
+            members: [parsedData.data.id],
+            tasks:[]
         };
-
         fetch("http://localhost:5000/board/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -46,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if(data.error){
                 document.getElementById('error').innerHTML = data.error;
             }else{
-                sessionStorage.setItem('session', JSON.stringify(data));
                 window.location.href = "./index.html";
             }
         })
@@ -54,4 +73,15 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error:', error);
         });
     });
-});
+}
+
+function readFileAsync(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            resolve(event.target.result);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
