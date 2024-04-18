@@ -1,6 +1,6 @@
 const userTypeDefs = `
     type User {
-        id: ID
+        id: ID!
         email: String!
         password: String!
     }
@@ -14,7 +14,7 @@ const userTypeDefs = `
     }
 
     type Mutation {
-        addUser(email: String!, password: String!): User
+        addUser(UserInput: UserInput!): User
     }
 `
 

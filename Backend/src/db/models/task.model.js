@@ -10,7 +10,7 @@ const taskSchema = new Schema(
         order: { type: String, enum: status,  required: true },
         colour: { type: String, enum: colours,  required: true },
         endTime: { type: Date, required: true },
-        members: { type: Schema.Types.ObjectId, ref: 'User' },
+        members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
     {
         timestamps: true

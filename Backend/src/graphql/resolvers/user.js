@@ -2,9 +2,14 @@ const User = require('../../db/models/user.model')
 
 const userResolvers = {
     Query: {
-        showUsers: () => {
-        
-            return [User]
+        showUsers: async () => {
+            try {
+                const users = await User.find();
+                return users;
+              } catch (error) {
+                console.error("Error al obtener usuarios:", error);
+                throw new Error('Error al obtener usuarios');
+              }
         },
         loginUser: async (_,{ userInput }) => {
             const { email, password } = userInput;
@@ -21,8 +26,8 @@ const userResolvers = {
         }
     },
     Mutation: {
-        addUser: async (_, { email, password }) => {
-
+        addUser: async (_, {UserInput}) => {
+          const { email, password } = UserInput;
             console.log("Se crea el usuario")
 
             try {

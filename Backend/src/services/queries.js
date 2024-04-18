@@ -6,9 +6,23 @@ query LoginUser($email: String!, $password: String!) {
     }
 }
 `
+const getBoardsByID = `
+query($id: ID!) {
+    getBoardsByID(id: $id) {
+      title
+      description
+      members {
+        id
+        email
+      }
+    }
+  }
+`
 
 const queries = {
-    getUser
+    getUser,
+    getBoardsByID
 }
+
 
 module.exports = queries;
