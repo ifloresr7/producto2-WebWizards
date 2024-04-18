@@ -6,6 +6,7 @@ const { ApolloServer } = require('apollo-server-express')
 const { typeDefs, mergedResolvers } = require('./src/graphql')
 const cors = require('cors')
 const boardRouter = require('./src/routes/board')
+const taskRouter = require('./src/routes/task')
 
 dotenv.config()
 const app = express()
@@ -27,7 +28,7 @@ app.use('/user', userRouter)
 
 app.use('/board', boardRouter)
 
-app.use('/task', userTask)
+app.use('/task', taskRouter)
 
 app.listen(config.port, () => {
     console.log(`Example app listening at http://localhost:${config.port}`)
