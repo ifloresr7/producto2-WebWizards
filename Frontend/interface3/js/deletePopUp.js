@@ -1,7 +1,7 @@
 import { dynamicColumn } from "./getColumns.js";
 
 export function deletePopUp(getID) {
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    const tasks = JSON.parse(sessionStorage.getItem("tasks"));
     tasks.forEach(item => {
         if (item.id == getID) {
             let taskModal = document.getElementById('taskModal');
@@ -72,7 +72,7 @@ export function deletePopUp(getID) {
             document.querySelectorAll('.saveButton').forEach(button => {
                 button.addEventListener('click', () => {
                     try {
-                        localStorage.setItem("tasks", JSON.stringify(tasks.filter(item => item.id !== getID)));;
+                        sessionStorage.setItem("tasks", JSON.stringify(tasks.filter(item => item.id !== getID)));;
                         dynamicColumn();
                     } catch (error) {
                         console.log(error);

@@ -1,28 +1,42 @@
 
+
 const taskTypeDefs = `
 type Task {
     id: ID!
     title: String!,
     description: String!,
-    status: String!,
+    status: Status!,
     order: String!,
-    colour: String,
+    colour: Colour!,
     endTime: String,
     members: [User],
 }    
+enum Status {
+    por hacer,
+    hecho,
+    pendiente
+}
+enum Colour {
+    red,
+    blue
+}
 
 input TaskInput {
     title: String!
     description: String!
-    status: String!,
+    status: Status!,
     order: String!,
+    colour: Colour!,
+    endTime: String,
     members: [ID],
-    colour: String,
-    endTime: String
 }
 
 type Query {
-        showTasks: String
+        showTasks: [Task]
+    }
+
+    type Mutation {
+        addTask(TaskInput: TaskInput!): Task
     }
 `
 
