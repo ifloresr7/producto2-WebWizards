@@ -8,10 +8,9 @@ const addUser = `
 `
 
 const addBoard = `
-  mutation($boardInput: boardInput!) {
-    addBoard(boardInput: $boardInput) {
-    }
-  }
+mutation($boardInput: boardInput!) {
+  addBoard(boardInput: $boardInput) {
+}
 `
 const addTask = `
   query ($id: ID!) {

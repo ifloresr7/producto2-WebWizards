@@ -64,10 +64,10 @@ const boardResolvers = {
       },
     Mutation: {
         addBoard: async (_, {boardInput}) => {
-            const { title, description, members } = boardInput;
+            const { title, description, members, image } = boardInput;
 
             try {
-                const board = await Board.create({ title, description, members })
+                const board = await Board.create({ title, description, members, image })
                 board.save()
                 return board;
             } catch(error) {

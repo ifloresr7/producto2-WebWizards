@@ -5,12 +5,14 @@ const boardTypeDefs = `
         description: String!
         members: [User]
         tasks: [Task]
+        image: String!
     }
     input boardInput {
         title: String!
         description: String!
         members: [ID!]!
         tasks: [ID]!
+        image: String!
     }
     type Query {
         countBoards: Int
