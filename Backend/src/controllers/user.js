@@ -1,4 +1,5 @@
 const axios = require('axios')
+const queries = require('../services/queries')
 
 const createUser = async (req, res) => {
     
@@ -43,15 +44,16 @@ const createUser = async (req, res) => {
     }
 }
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
     console.log("entra al login")
     try {
-        console.log(req);
         const { email, password } = req.body
 
         const query = queries.getUser
 
-        const variables = { email, password }
+        const variables = { 
+            userInput: {email, password }
+        }
 
         const response = await axios.post('http://localhost:5000/graphql', {
             query,

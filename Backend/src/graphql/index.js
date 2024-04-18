@@ -7,6 +7,4 @@ const mergedResolvers = require('./resolvers');
 
 const typeDefs = `${userTypeDefs} ${taskTypeDefs} ${boardTypeDefs}`;
 
-console.log(typeDefs)
-
 module.exports = { typeDefs, mergedResolvers };
