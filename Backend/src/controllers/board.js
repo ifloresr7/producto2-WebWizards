@@ -13,10 +13,10 @@ const createBoard = async (req, res) => {
     })
 
     if (response.data.errors) {
-        res.status(400).send({ error: 'Error al crear el tablero' })
+        return res.status(400).send({ error: 'Error al crear el tablero' })
     }
 
-    res.status(200).json({ message: "Tablero creado correctamente" })
+    return res.status(200).json({ message: "Tablero creado correctamente" })
 
 }
 
@@ -33,13 +33,12 @@ const getBoards = async (req, res) => {
     })
 
     if (response.data.errors) {
-        res.status(400).json({ error: 'Error obteniendo boards'})
+        return res.status(400).json({ error: 'Error obteniendo boards'})
     }
 
     const boards = response.data.data.getBoardsByID
 
-
-    res.status(200).json({ data: boards })
+    return res.status(200).json({ data: boards })
 
 }
 
@@ -63,10 +62,10 @@ const deleteBoard = async (req, res) => {
     })
 
     if (response.data.errors) {
-        res.status(400).send('Error eliminando boards')
+        return res.status(400).send('Error eliminando boards')
     }
 
-    res.status(200).json(response.data.data.deleteBoards)
+    return res.status(200).json(response.data.data.deleteBoards)
 }
 
 module.exports = {

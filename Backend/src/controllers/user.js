@@ -2,7 +2,6 @@ const axios = require('axios')
 const queries = require('../services/queries')
 
 const createUser = async (req, res) => {
-    
     try {
 
         const { email, password } = req.body
@@ -27,7 +26,7 @@ const createUser = async (req, res) => {
         })
 
         if (response.data.errors) {
-            res.status(400).send('Error creando usuario')
+            return res.status(400).send('Error creando usuario')
         }
 
         // Crear autentificación usuario con JWT
@@ -36,11 +35,11 @@ const createUser = async (req, res) => {
 
         // Devolver boards y token
 
-        res.status(200).json(response.data.data.addUser);
+        return res.status(200).json(response.data.data.addUser);
 
     } catch(error) {
         console.log(error)
-        res.status(400).send('Error creando usuario')
+        return res.status(400).send('Error creando usuario')
     }
 }
 
@@ -60,19 +59,18 @@ const loginUser = async (req, res) => {
             variables
         })
 
-        
         if (response.data.errors) {
-            res.status(401).send({ error: 'Error al iniciar sesión: El usuaurio no existe o la contraseña es incorrecta' })
+            return res.status(401).json({ error: 'Error al iniciar sesión: El usuaurio no existe o la contraseña es incorrecta' })
         }
         
         const user = response.data.data.loginUser
-        
+
         // Crear autentificación usuario con JWT
 
-        res.status(200).json({ data: user })
+        return res.status(200).json({ data: user })
     } catch(error) {
         console.log(error)
-        res.status(400).send('Error al iniciar sesión')
+        return res.status(400).send('Error al iniciar sesión')
     }
 }
 
