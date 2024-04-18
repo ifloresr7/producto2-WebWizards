@@ -4,7 +4,6 @@ const config = require('./src/config')
 const userRouter = require('./src/routes/user')
 const { ApolloServer } = require('apollo-server-express')
 const { typeDefs, mergedResolvers } = require('./src/graphql')
-const { gql } = require('graphql-request')
 
 dotenv.config()
 const app = express()
