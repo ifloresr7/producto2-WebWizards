@@ -16,8 +16,8 @@ const task = {
         
     },
     Mutation: {
-        addTask: async (_, {TaskInput}) => {
-        const { title, description, status, order, colour, endTime, members } = TaskInput;
+        addTask: async (_, {taskInput}) => {
+        const { title, description, status, order, colour, endTime, members } = taskInput;
             console.log("Se crea la tarea")
 
             try {

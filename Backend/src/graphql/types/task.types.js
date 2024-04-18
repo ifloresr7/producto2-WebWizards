@@ -20,7 +20,7 @@ enum Colour {
     ${colours}
 }
 
-input TaskInput {
+input taskInput {
     title: String!
     description: String!
     status: Status!,
@@ -35,7 +35,7 @@ type Query {
     }
 
     type Mutation {
-        addTask(TaskInput: TaskInput!): String
+        addTask(taskInput: taskInput!): String
     }
 `
 

@@ -10,24 +10,9 @@ mutation($boardInput: boardInput!) {
 }
 `
 const addTask = `
-  query ($id: ID!) {
-    getTasksIDBoard(id: $id) {
-      title
-      description
-      members {
-        id
-        email
-      }
-      tasks {
-        title
-        description
-        members {
-          id
-          email
-        }
-      }
-    }
-  }
+mutation($taskInput: taskInput!) {
+  addTask(taskInput: $taskInput)
+}
 `
 
 const mutations = {
