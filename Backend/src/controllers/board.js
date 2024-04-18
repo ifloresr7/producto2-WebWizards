@@ -2,11 +2,18 @@ const queries = require("../services/queries")
 const axios = require('axios')
 
 const createBoard = async (req, res) => {
-    const { title, description, members } = req.body
+    const { title, description, members, image } = req.body
 
     const query = queries.addBoard
 
-    const variables = { title, description, members }
+    const variables = {
+        boardInput: {
+            title, 
+            description, 
+            members,
+            image       
+        }
+    }
 
     const response = await axios.post('http://localhost:5000/graphql', {
         query,

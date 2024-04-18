@@ -1,4 +1,4 @@
-const { Schema, model } =  require('mongoose');
+const { Schema, model, trusted } =  require('mongoose');
 
 const boardSchema = new Schema(
     {
@@ -6,6 +6,7 @@ const boardSchema = new Schema(
         description: { type: String, required: true },
         members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+        image: { type: String, required: true}
     },
     {
         timestamps: true
