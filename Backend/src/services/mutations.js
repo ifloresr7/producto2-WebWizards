@@ -9,6 +9,13 @@ mutation($boardInput: boardInput!) {
   addBoard(boardInput: $boardInput)
 }
 `
+
+const deleteBoard = `
+mutation($id: ID!) {
+  deleteBoard(id: $id)
+}
+`
+
 const addTask = `
 mutation($taskInput: taskInput!) {
   addTask(taskInput: $taskInput)
@@ -18,6 +25,7 @@ mutation($taskInput: taskInput!) {
 const mutations = {
     addUser,
     addBoard,
+    deleteBoard,
     addTask
 }
 

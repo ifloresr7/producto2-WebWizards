@@ -74,7 +74,18 @@ const boardResolvers = {
                 console.log(error)
                 throw new Error('Error creating board')
             }
-        }
+        },
+        deleteBoard: async (_, {id}) => {
+            
+            try {
+                const board = await Board.findByIdAndDelete(id)
+                board.deleteOne()
+                return "Tablero borrado correctamente";
+              } catch(error) {
+                console.error("Error al eliminar tablero:", error);
+                throw new Error('Error al eliminar tablero');
+              }
+          }
     }
 };
 
