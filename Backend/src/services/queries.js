@@ -9,6 +9,7 @@ const getUser = `
 const getBoardsByUserID = `
     query($id: ID!) {
         getBoardsByUserID(id: $id) {
+            id
             title
             description
             members {
