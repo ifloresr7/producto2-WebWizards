@@ -28,7 +28,18 @@ const task = {
                 console.log(error)
                 throw new Error('Error creating user')
             }
-        }
+        },
+        deleteTask: async (_, {id}) => { 
+            
+            try {
+                const task = await Task.findByIdAndDelete(id)
+                task.deleteOne()
+                return "Tarea borrada correctamente";
+              } catch(error) {
+                console.error("Error al eliminar tarea:", error);
+                throw new Error('Error al eliminar tarea');
+              }
+          }
     }
 }
 

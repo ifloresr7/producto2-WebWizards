@@ -75,7 +75,7 @@ const boardResolvers = {
                 throw new Error('Error creating board')
             }
         },
-        deleteBoard: async (_, {id}) => {
+        deleteBoard: async (_, {id}) => { 
             
             try {
                 const board = await Board.findByIdAndDelete(id)
