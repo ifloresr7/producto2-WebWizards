@@ -3,16 +3,7 @@ const queries = require("../services/queries")
 const createBoard = async (req, res) => {
     const { title, description, members } = req.body
 
-    const query = `
-        mutation CreateBoard($title: String!, $description: String!) {
-            createBoard(title: $title, description: $description, members: $members) {
-                title
-                description
-            }
-        }
-    `
-
-
+    const query = queries.addBoard
 
     const variables = { title, description, members }
 
@@ -21,9 +12,13 @@ const createBoard = async (req, res) => {
         variables
     })
 
+    const 
+
     if (response.data.errors) {
         res.status(400).send('Error creando board')
     }
+
+
 }
 
 const getBoards = async (req, res) => {
@@ -39,7 +34,7 @@ const getBoards = async (req, res) => {
     })
 
     if (response.data.errors) {
-        res.status(400).send('Error obteniendo boards')
+        res.status(400).json({ error: 'Error obteniendo boards'})
     }
 
     const boards = response.data.data.getBoardsByID

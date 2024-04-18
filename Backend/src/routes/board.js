@@ -4,4 +4,6 @@ const boardRouter = express.Router();
 
 boardRouter.post('/get-boards', getBoards);
 
+
+
 module.exports = boardRouter;

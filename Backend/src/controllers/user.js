@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
         const user = response.data.data.loginUser
 
         if (response.data.errors) {
-            res.status(400).send('Error al iniciar sesión: El usuaurio no existe o la contraseña es incorrecta')
+            res.status(401).send({ error: 'Error al iniciar sesión: El usuaurio no existe o la contraseña es incorrecta' })
         }
 
         // Crear autentificación usuario con JWT
