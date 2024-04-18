@@ -6,9 +6,9 @@ const getUser = `
         }
     }
 `
-const getBoardsByID = `
+const getBoardsByUserID = `
     query($id: ID!) {
-        getBoardsByID(id: $id) {
+        getBoardsByUserID(id: $id) {
             title
             description
             members {
@@ -18,9 +18,9 @@ const getBoardsByID = `
         }
     }
 `
-const getTasksIDBoard = `
+const getDataByBoardID = `
   query ($id: ID!) {
-    getTasksIDBoard(id: $id) {
+    getDataByBoardID(id: $id) {
         title
         description
         members {
@@ -36,12 +36,31 @@ const getTasksIDBoard = `
             }
         }
     }
+`
+
+const getTasksInStatusWithIDBoard = `
+query ($status: Status!, $id: ID!) {
+    getTasksInStatusWithIDBoard(status: $status, id: $id) {
+      id
+      title
+      description
+      colour
+      endTime
+      status
+      members {
+        id
+        email
+      }
+    }
+  }
 
 `
+
 const queries = {
     getUser,
-    getBoardsByID,
-    getTasksIDBoard
+    getBoardsByUserID,
+    getDataByBoardID,
+    getTasksInStatusWithIDBoard
 }
 
 

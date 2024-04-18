@@ -9,13 +9,14 @@ const boardTypeDefs = `
     input boardInput {
         title: String!
         description: String!
-        members: [ID]!
-        tasks: [ID]
+        members: [ID!]!
+        tasks: [ID]!
     }
     type Query {
         countBoards: Int
-        getBoardsByID (id: ID!): [Board]
-        getTasksIDBoard (id: ID!): [Board]
+        getBoardsByUserID (id: ID!): [Board]
+        getDataByBoardID (id: ID!): [Board]
+        getTasksInStatusWithIDBoard (status: Status!, id: ID!): [Task]
         showBoards: [Board]
     }
     type Mutation {

@@ -13,11 +13,31 @@ const addBoard = `
     }
   }
 `
+const addTask = `
+  query ($id: ID!) {
+    getTasksIDBoard(id: $id) {
+      title
+      description
+      members {
+        id
+        email
+      }
+      tasks {
+        title
+        description
+        members {
+          id
+          email
+        }
+      }
+    }
+  }
+`
 
-  
 const mutations = {
     addUser,
-    addBoard
+    addBoard,
+    addTask
 }
 
 module.exports = mutations;
