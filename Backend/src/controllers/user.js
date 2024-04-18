@@ -12,7 +12,9 @@ const createUser = async (req, res) => {
 
         const mutation = mutations.addUser
 
-        const variables = { email, password }
+        const variables = { 
+            userInput: { email, password }
+        }
 
         const response = await axios.post('http://localhost:5000/graphql', {
             query: mutation,
