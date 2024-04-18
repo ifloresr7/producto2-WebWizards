@@ -1,5 +1,6 @@
 const axios = require('axios')
 const mutations = require('../services/mutations')
+const queries = require('../services/queries')
 
 const createBoard = async (req, res) => {
     try {
@@ -41,7 +42,11 @@ const getBoards = async (req, res) => {
     try {
         const { id } = req.query
 
+        console.log(id)
+
         const query = queries.getBoardsByUserID
+
+        console.log(query)
 
         const variables = { id }
         
