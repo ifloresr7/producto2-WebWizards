@@ -27,6 +27,8 @@ app.use('/user', userRouter)
 
 app.use('/board', boardRouter)
 
+app.use('/task', userTask)
+
 app.listen(config.port, () => {
     console.log(`Example app listening at http://localhost:${config.port}`)
 })
