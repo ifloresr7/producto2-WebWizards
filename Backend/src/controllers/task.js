@@ -9,7 +9,9 @@ const createtask = async (req, res) => {
 
         console.log(req.body)
     
-        const variables = { title, description, status, order, colour, endTime, members }
+        const variables = { 
+            taskInput: { title, description, status, order, colour, endTime, members }
+        }
     
         const response = await axios.post('http://localhost:5000/graphql', {
             query: mutation,
@@ -17,14 +19,14 @@ const createtask = async (req, res) => {
         })
     
         if (response.data.errors) {
-            return res.status(400).send({ error: 'Error al crear el tablero' })
+            return res.status(400).send({ error: 'Error al crear la tarea' })
         }
     
-        return res.status(200).json({ message: "Tablero creado correctamente" })
+        return res.status(200).json({ message: "Tarea creada correctamente" })
     } catch (error) {
         console.log(error)
-        console.log("Error al crear el tablero")
-        return res.status(400).json({ error: 'Error al crear el tablero' })
+        console.log("Error al crear la tarea")
+        return res.status(400).json({ error: 'Error al crear la tarea' })
     }
 }
 
