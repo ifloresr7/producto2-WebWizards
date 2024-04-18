@@ -1,11 +1,4 @@
-import { addFooter } from "../../components/footer/index.js";
-import { addHeader } from "../../components/header/index.js";
 import { dynamicColumn } from "./getColumns.js";
-
-document.addEventListener('DOMContentLoaded', async () => {
-    await addHeader();
-    addFooter();
-})
 
 dynamicColumn();
 
@@ -23,7 +16,7 @@ function handleDragEnd(e) {
     draggedEl.classList.remove("dragging");
     draggedEl.removeAttribute('draggable');
     const parentId = draggedEl.parentNode.id;
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    const tasks = JSON.parse(sessionStorage.getItem("tasks"));
     const index = tasks.findIndex(item => item.id === draggedEl.id);
     if (index !== -1) {
         // Si se encuentra el elemento, realiza la edición
@@ -37,7 +30,7 @@ function handleDragEnd(e) {
         }
         tasks[index].status = estado;
         // Guarda el array actualizado en el almacenamiento local
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+        sessionStorage.setItem("tasks", JSON.stringify(tasks));
     } else {
         console.log("No se encontró ningún elemento con el ID proporcionado.");
     }

@@ -124,8 +124,8 @@ function createTask() {
         try {
             event.preventDefault();
 
-            // Obtener los datos existentes de localStorage
-            const existingTasksString = localStorage.getItem("tasks");
+            // Obtener los datos existentes de sessionStorage
+            const existingTasksString = sessionStorage.getItem("tasks");
             // Si no hay datos previamente guardados, inicializa existingTasks como un array vacío
             let existingTasks = [];
             if (existingTasksString) {
@@ -146,8 +146,8 @@ function createTask() {
 
             // Agregar el nuevo objeto a existingTasks
             existingTasks.push(taskData);
-            // Guardar existingTasks en localStorage
-            localStorage.setItem("tasks", JSON.stringify(existingTasks));
+            // Guardar existingTasks en sessionStorage
+            sessionStorage.setItem("tasks", JSON.stringify(existingTasks));
             dynamicColumn();
         } catch (error) {
             console.log(error);

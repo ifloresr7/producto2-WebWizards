@@ -1,17 +1,7 @@
-import { addFooter } from "../../components/footer/index.js";
-import { addHeader } from "../../components/header/index.js";
-import { createBoards } from "./createBoards.js";
-import { dataProvider } from "./dataProvider.js";
+import { createBoards } from "./createBoards.js"; // Importa la función createBoards desde el archivo createBoards.js.
 
 document.addEventListener('DOMContentLoaded', async () => {
-
-    // se provee al local storage con tableros y tareas que lee de los .JSON 
-    await dataProvider();
-
-    //Se añade el header y footer
-    await addHeader();
-    addFooter();
-
-    //Se crean los tableros
+    // Cuando el DOM se haya cargado completamente, se llama a la función createBoards para crear los tableros.
+    // Se espera que la función createBoards se complete antes de continuar.
     await createBoards();
 });
