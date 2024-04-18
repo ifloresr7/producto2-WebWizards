@@ -1,51 +1,43 @@
 import {getBoards} from './HttpRequest.js'
 
 export async function createBoards() {
-    let deleteIconHTML = ""
-
-    try {
-        // Intenta cargar el HTML del icono de eliminación desde un archivo externo.
-        const res = await fetch('/components/deleteButton.html')
-
-        if (!res.ok) {
-            throw new Error('Error loading delete icon') // Lanza un error si no se pudo cargar el HTML del icono de eliminación.
-        }
-
-        const deleteIcon = await res.text()
-        deleteIconHTML = deleteIcon // Almacena el HTML del icono de eliminación.
-    } catch (err) {
-        console.log(err) // Maneja cualquier error ocurrido durante la carga del HTML del icono de eliminación.
-    } 
-
-    // Obtiene la sección donde se mostrarán los tableros.
-    const boardsSection = document.getElementById("board-container");
-
+    //Contenedor de tableros
+    const board_container = document.getElementById('board-container');
     // Obtiene los datos de los tableros desde el almacenamiento de sesión.
-    const boards = getBoards();
-    console.log(boards);
-    // Genera el HTML para cada tablero.
-    const htmlBoards = boards.map(board => {
-        // Establece la URL de la imagen del tablero o una imagen predeterminada si no se proporciona.
-        const image = board.image ? board.image : "/assets/default.png";
-
-        return (
-        `<div class="card" style="width: 20rem;">
-            <a id="${board.id}" boardTitle="${board.title}" class="delete-board-button">
-                ${deleteIconHTML} <!-- Inserta el HTML del icono de eliminación -->
-            </a>
-            <img src=${image} class="card-img-top board-image" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">${board.title}</h5>
-                <p class="card-text">${board.description}</p>
-                <a href=dashboard.html?boardId=${board.id} class="btn btn-primary">Abrir</a>
+    const boards = await getBoards(); // Espera a que se resuelva la función getBoards()
+    for (let i = 0; i < boards.length; i++) {
+        const board = boards[i];
+        // Genera el HTML para el tablero actual
+        const boardHTML = `
+            <div class="card" style="width: 20rem;">
+                <a id="${board.id}" boardTitle="${board.title}" class="delete-board-button">Eliminar</a>
+                <img src="board.image" class="card-img-top board-image" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${board.title}</h5>
+                    <p class="card-text">${board.description}</p>
+                    <a href="dashboard.html?boardId=${board.id}" class="btn btn-primary">Abrir</a>
+                </div>
             </div>
-        </div>`
-        )
-    })
+        `;
+        // Crea un nuevo elemento div
+        const boardElement = document.createElement('div');
+        // Establece el HTML generado para el tablero actual como el contenido del nuevo elemento
+        boardElement.innerHTML = boardHTML;
+        // Añade el nuevo elemento al contenedor con el ID "board-container"
+        board_container.appendChild(boardElement);
+    }
+    const buttonAddBoard = `
+    <div id="add-board-button">
+        <a href="addBoard.html" class="add-board-button">Nuevo tablero</a>
+    </div>
+    `;
 
-    const allHtmlBoards = htmlBoards.join(""); // Une todos los elementos HTML de los tableros en una cadena.
-
-    boardsSection.insertAdjacentHTML("afterbegin", allHtmlBoards); // Inserta el HTML de los tableros en la sección del tablero.
+    // Crea un nuevo elemento div
+    const buttonAddBoardElement = document.createElement('div');
+    // Establece el HTML como el contenido del nuevo elemento
+    buttonAddBoardElement.innerHTML = buttonAddBoard;
+    // Añade el nuevo elemento al contenedor con el ID "board-container"
+    document.getElementById('board-container').appendChild(buttonAddBoardElement);
 
     // Añade event listeners a los botones de eliminación para abrir el modal.
     openModal();
