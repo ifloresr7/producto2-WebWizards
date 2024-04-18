@@ -12,12 +12,11 @@ const createBoard = async (req, res) => {
         variables
     })
 
-    const 
-
     if (response.data.errors) {
-        res.status(400).send('Error creando board')
+        res.status(400).send({ error: 'Error al crear el tablero' })
     }
 
+    res.status(200).json({ message: "Tablero creado correctamente" })
 
 }
 
