@@ -1,11 +1,20 @@
-import { addBoard } from "./addBoard.js"; // Importa la función addBoard desde el archivo addBoard.js.
+import { createBoard } from "./HttpRequest.js";
+
 document.addEventListener('DOMContentLoaded', async () => {
     // Añade un event listener para ajustar la altura del textarea cuando se modifica su valor.
     document.getElementById('description').addEventListener('input', adjustTextareaHeight);
     // Añade un event listener para el evento submit del formulario.
-    
-    document.querySelector(".add-board-form").addEventListener('submit', (event) => {
-        addBoard(event); // Llama a la función addBoard cuando se envía el formulario.
+
+    document.getElementById('add-board-form').addEventListener('submit', (event) => {
+        event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+        // Llama a la función createBoard cuando se envía el formulario.
+        createBoard().then(() => {
+        }).catch(error => {
+            console.error('Error al crear el tablero:', error);
+            // Aquí puedes manejar el error de alguna manera, como mostrar un mensaje al usuario.
+        }).finally(() => {
+            window.location.href = "index.html";            
+        });
     });
 
     document.getElementById('returnButton').addEventListener('click', function () {
@@ -14,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 // Función para ajustar la altura del textarea dinámicamente según el contenido.
 function adjustTextareaHeight() {
-    const textarea = document.getElementById('floatingTextarea');
+    const textarea = document.getElementById('description');
     textarea.style.height = 'auto'; // Resetea la altura a auto.
     textarea.style.height = textarea.scrollHeight + 'px'; // Ajusta la altura para que se ajuste al contenido.
 }

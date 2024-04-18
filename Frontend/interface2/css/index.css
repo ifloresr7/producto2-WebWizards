@@ -29,3 +29,5 @@ form.add-board-form {
     display: grid;
     gap: 7px;
 }
+
+.error{color:red}
