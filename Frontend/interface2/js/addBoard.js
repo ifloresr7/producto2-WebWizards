@@ -2,7 +2,6 @@ export function addBoard(event) { // Define una función llamada addBoard que to
     event.preventDefault(); // Previene el comportamiento predeterminado del evento (en este caso, el envío del formulario).
     // Crea un objeto boardData que contiene la información del tablero, extrayendo los valores del formulario del evento.
     const boardData = {
-        id: (Math.random() * 10000).toString(), // Genera un ID aleatorio para el tablero.
         title: event.target.elements.title.value, // Obtiene el valor del campo de título del formulario.
         description: event.target.elements.description.value, // Obtiene el valor del campo de descripción del formulario.
         image: event.target.elements.image.value, // Obtiene el valor del campo de imagen del formulario.
