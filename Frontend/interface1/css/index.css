@@ -35,18 +35,32 @@ main {
   min-height: 130px;
 }
 
-.delete-board-button {
-  width: 30px;
-  height: 30px;
+.action-button{
+  width: 35px;
+  height: 35px;
+  padding: 5px;
   position: absolute;
-  right: 5px;
   top: 5px;
   border-radius: 100%;
-  background-color: var(--grey-color);
   cursor: pointer;
   transition: all 0.5s;
   overflow: hidden;
-  border: 1px solid var(--dark-color);
+  background-color: #ffffff;
+  border: 1px solid black;
+}
+.action-button svg{
+  width: 22px;
+  height: 22px;
+
+}
+.edit-board-button{
+  right: 45px;
+}
+.edit-board-button:hover {
+  background-color: var(--primary-color);
+}
+.delete-board-button {
+  right: 5px;
 }
 
 .delete-board-button:hover {
