@@ -1,0 +1,22 @@
+form.login {
+    max-width: 500px;
+    margin: 150px auto;
+    padding: 20px;
+    box-shadow: 0px 6px 15px 0px #c3c3c3;
+    background-color: white;
+}
+
+.login {
+    display: grid;
+    gap: 15px;
+}
+
+.login h1 {
+    font-size: 2rem;
+    justify-self: center;
+}
+
+.form-group {
+    display: grid;
+    gap: 7px;
+}
