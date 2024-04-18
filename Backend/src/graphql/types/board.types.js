@@ -23,6 +23,7 @@ const boardTypeDefs = `
     }
     type Mutation {
         addBoard(boardInput: boardInput!): String
+        deleteBoard(id: ID!): String
     }
 `
 
