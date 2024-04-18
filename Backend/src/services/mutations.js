@@ -1,20 +1,18 @@
 const addUser = `
   mutation($userInput: UserInput!) {
-      addUser(UserInput: $userInput) {
-        email
-        id
-      }
+    addUser(UserInput: $userInput) {
+      email
+      id
     }
   }
 `
 
 const addBoard = `
   mutation($boardInput: boardInput!) {
-      addBoard(boardInput: $boardInput) {
-      }
+    addBoard(boardInput: $boardInput) {
     }
   }
-  `
+`
 
   
 const mutations = {

@@ -9,7 +9,6 @@ const createUser = async (req, res) => {
 
         // Consultar si ya existe el usuario
 
-
         const mutation = mutations.addUser
 
         const variables = { 
