@@ -8,7 +8,7 @@ const boardResolvers = {
         countBoards() {
             return Board.collection.countDocuments()
         },
-        getBoardsByID: async (_, { id }) => {
+        getBoardsByUserID: async (_, { id }) => {
             try {
                 const boards = await Board.find({ members: id });
                 return boards;
@@ -26,13 +26,23 @@ const boardResolvers = {
                 throw new Error('Error al obtener tableros');
               }
         },
-        getTasksIDBoard: async (_, { id }) => {
+        getDataByBoardID: async (_, { id }) => {
             try {
                 const board = await Board.findById(id);
-                return [board];
+                return board;
             }catch (error) {
                 console.error("Error al obtener la información del tablero:", error);
                 throw new Error('Error al obtener la información del tablero');
+            }
+        },
+        getTasksInStatusWithIDBoard: async (_, {status, id }) => {
+            try {
+                const boardSelect = await Board.findById(id).populate("tasks")
+                const tasks = boardSelect.tasks.filter(task => task.status == status)
+                return tasks;
+            }catch (error) {
+                console.error("Error al obtener las tareas con un estado específico:", error);
+                throw new Error('Error al obtener las tareas con un estado específico');
             }
         },
     },
@@ -44,7 +54,13 @@ const boardResolvers = {
     
           return members;
         },
-    
+        tasks: async (parent, args, context) => {
+            const tasksIds = parent.tasks;
+      
+            const tasks = await Task.find({ _id: { $in: tasksIds } });
+      
+            return tasks;
+          },
       },
     Mutation: {
         addBoard: async (_, {boardInput}) => {

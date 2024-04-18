@@ -1,34 +1,33 @@
+const { status, colours } = require("../../constants")
 
 
 const taskTypeDefs = `
+scalar DateTime
 type Task {
     id: ID!
     title: String!,
     description: String!,
     status: Status!,
-    order: String!,
+    order: Int!,
     colour: Colour!,
-    endTime: String,
-    members: [User],
+    endTime: DateTime!,
+    members: [User]!,
 }    
 enum Status {
-    por hacer,
-    hecho,
-    pendiente
+    ${status}
 }
 enum Colour {
-    red,
-    blue
+    ${colours}
 }
 
 input TaskInput {
     title: String!
     description: String!
     status: Status!,
-    order: String!,
+    order: Int!,
     colour: Colour!,
-    endTime: String,
-    members: [ID],
+    endTime: DateTime!,
+    members: [ID]!,
 }
 
 type Query {
