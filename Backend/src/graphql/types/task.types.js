@@ -35,7 +35,7 @@ type Query {
     }
 
     type Mutation {
-        addTask(TaskInput: TaskInput!): Task
+        addTask(TaskInput: TaskInput!): String
     }
 `
 

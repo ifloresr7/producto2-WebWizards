@@ -1,31 +1,39 @@
-const queries = require("../services/queries")
 const axios = require('axios')
+const mutations = require('../services/mutations')
 
 const createBoard = async (req, res) => {
-    const { title, description, members, image } = req.body
+    try {
+        const { title, description, members, tasks, image } = req.body
+    
+        const mutation = mutations.addBoard
 
-    const query = queries.addBoard
-
-    const variables = {
-        boardInput: {
-            title, 
-            description, 
-            members,
-            image       
+        console.log(mutation)
+    
+        const variables = {
+            boardInput: {
+                title, 
+                description, 
+                tasks,
+                members,
+                image       
+            }
         }
+    
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query: mutation,
+            variables
+        })
+
+        if (response.data.errors) {
+            return res.status(400).send({ error: 'Error al crear el tablero' })
+        }
+    
+        return res.status(200).json({ message: "Tablero creado correctamente" })
+
+    } catch(error) {
+        console.log("Error al crear el tablero")
+        return res.status(400).json({ error: 'Error al crear el tablero' })
     }
-
-    const response = await axios.post('http://localhost:5000/graphql', {
-        query,
-        variables
-    })
-
-    if (response.data.errors) {
-        return res.status(400).send({ error: 'Error al crear el tablero' })
-    }
-
-    return res.status(200).json({ message: "Tablero creado correctamente" })
-
 }
 
 const getBoards = async (req, res) => {
@@ -57,36 +65,60 @@ const getBoards = async (req, res) => {
 }
 
 const getBoardData = async (req, res) => {
-    const id = req.params.id
+    try {
+        const id = req.params.id
+    
+        const query = queries.getDataByBoardID
+    
+        const variables = { id }
+    
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query,
+            variables
+        })
 
+        if (response.data.errors) {
+            return res.status(400).json({ error: 'Error obteniendo datos del board'})
+        }
 
+        const board = response.data.data.getDataByBoardID
+
+        return res.status(200).json({ data: board })
+    } catch(error) {
+        console.log("Error al traernos los datos del board")
+        return res.status(400).json({ error: 'Error obteniendo datos del board'})
+    }
 }
 
-
 const deleteBoard = async (req, res) => {
-    const { id } = req.body
-
-    const query = `
-        mutation DeleteBoards($id: ID!) {
-            deleteBoards(id: $id) {
-                title
-                description
+    try {
+        const { id } = req.body
+    
+        const query = `
+            mutation DeleteBoards($id: ID!) {
+                deleteBoards(id: $id) {
+                    title
+                    description
+                }
             }
+        `
+    
+        const variables = { id }
+    
+        const response = await axios.post('http://localhost:5000/graphql', {
+            query,
+            variables
+        })
+    
+        if (response.data.errors) {
+            return res.status(400).send('Error eliminando boards')
         }
-    `
-
-    const variables = { id }
-
-    const response = await axios.post('http://localhost:5000/graphql', {
-        query,
-        variables
-    })
-
-    if (response.data.errors) {
-        return res.status(400).send('Error eliminando boards')
+    
+        return res.status(200).json({ message: "Board eliminado correctamente"})
+    } catch(error) {
+        console.log("Error al eliminar el board")
+        return res.status(400).json({ error: 'Error eliminando board'})
     }
-
-    return res.status(200).json(response.data.data.deleteBoards)
 }
 
 module.exports = {

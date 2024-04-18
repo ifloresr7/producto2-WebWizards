@@ -23,8 +23,7 @@ const task = {
             try {
                 const task = await Task.create({ title, description, status, order, colour, endTime, members })
                 task.save()
-                console.log("Tarea creada correctamente")
-                return task;
+                return "Tarea creada correctamente";
             } catch(error) {
                 console.log(error)
                 throw new Error('Error creating user')

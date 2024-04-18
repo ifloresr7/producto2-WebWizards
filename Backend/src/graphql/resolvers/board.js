@@ -69,7 +69,7 @@ const boardResolvers = {
             try {
                 const board = await Board.create({ title, description, members, image })
                 board.save()
-                return board;
+                return "Tablero creado correctamente";
             } catch(error) {
                 console.log(error)
                 throw new Error('Error creating board')

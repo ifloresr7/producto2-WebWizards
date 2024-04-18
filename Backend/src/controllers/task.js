@@ -20,3 +20,5 @@ const createtask = async (req, res) => {
     return res.status(200).json({ message: "Tablero creado correctamente" })
 
 }
+
+module.exports = { createtask }

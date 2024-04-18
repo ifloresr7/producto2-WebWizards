@@ -22,7 +22,7 @@ const boardTypeDefs = `
         showBoards: [Board]
     }
     type Mutation {
-        addBoard(boardInput: boardInput!): Board
+        addBoard(boardInput: boardInput!): String
     }
 `
 
