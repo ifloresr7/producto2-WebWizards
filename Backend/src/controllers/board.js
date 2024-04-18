@@ -22,7 +22,7 @@ const createBoard = async (req, res) => {
 }
 
 const getBoards = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
 
     const query = queries.getBoardsByID
 
