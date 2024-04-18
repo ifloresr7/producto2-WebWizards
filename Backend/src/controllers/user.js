@@ -1,5 +1,6 @@
 const axios = require('axios')
 const queries = require('../services/queries')
+const mutations = require('../services/mutations')
 
 const createUser = async (req, res) => {
     try {
@@ -9,14 +10,7 @@ const createUser = async (req, res) => {
         // Consultar si ya existe el usuario
 
 
-        const mutation = `
-            mutation AddUser($email: String!, $password: String!) {
-                addUser(email: $email, password: $password) {
-                email
-                password
-                }
-            }
-        `
+        const mutation = mutations.addUser
 
         const variables = { email, password }
 
@@ -24,10 +18,6 @@ const createUser = async (req, res) => {
             query: mutation,
             variables,
         })
-
-        if (response.data.errors) {
-            return res.status(400).send('Error creando usuario')
-        }
 
         // Crear autentificación usuario con JWT
 
@@ -39,7 +29,7 @@ const createUser = async (req, res) => {
 
     } catch(error) {
         console.log(error)
-        return res.status(400).send('Error creando usuario')
+        return res.status(400).json({ error: 'Error creando usuario' })
     }
 }
 
