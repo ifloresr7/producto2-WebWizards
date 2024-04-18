@@ -11,6 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
         evt.preventDefault();
         let emailValue = document.getElementById('inputEmail').value;
         let passwordValue = document.getElementById('inputPassword').value;
+
+        // Validar que los campos requeridos no estén vacíos
+        if (!emailValue || !passwordValue) {
+            document.getElementById('error').innerHTML = "Por favor, completa todos los campos requeridos.";
+            return; // Detener el flujo de la función si hay campos vacíos
+        }
+
         let data = {
             email: emailValue,
             password: passwordValue

@@ -3,7 +3,7 @@ import { colours } from "../../constants/colors.js";
 import { changeColour } from "./newTaskPopUp.js";
 
 export function editPopUp(getID) {
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    const tasks = JSON.parse(sessionStorage.getItem("tasks"));
     tasks.forEach(item => {
         if (item.id == getID) {
             let taskModal = document.getElementById('taskModal');
@@ -100,7 +100,7 @@ export function editPopUp(getID) {
                             tasks[index].members = members;
                             tasks[index].colour = colour;
                             // Guarda el array actualizado en el almacenamiento local
-                            localStorage.setItem("tasks", JSON.stringify(tasks));
+                            sessionStorage.setItem("tasks", JSON.stringify(tasks));
                         } else {
                             console.log("No se encontró ningún elemento con el ID proporcionado.");
                         }

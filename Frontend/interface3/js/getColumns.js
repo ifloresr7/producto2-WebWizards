@@ -6,7 +6,7 @@ export function dynamicColumn() {
 
     const boardId = new URLSearchParams(window.location.search).get('boardId');
 
-    const alltasks = JSON.parse(localStorage.getItem("tasks"));
+    const alltasks = JSON.parse(sessionStorage.getItem("tasks"));
     const tasks = alltasks.filter(task => task.boardId === boardId);
 
     let columnPending = document.getElementById('pendingTasks');

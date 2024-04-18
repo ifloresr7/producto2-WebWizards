@@ -1,34 +1,33 @@
-import { addFooter } from "../../components/footer/index.js";
-import { addHeader } from "../../components/header/index.js";
-import { addBoard } from "./addBoard.js";
-
+import { addBoard } from "./addBoard.js"; // Importa la función addBoard desde el archivo addBoard.js.
 document.addEventListener('DOMContentLoaded', async () => {
-
-    //Se añade el header y footer
-    await addHeader();
-    addFooter();
-
-    // Se aañade event listener para reajustar altura del textarea cuando se modifica el valor del mismo
+    // Añade un event listener para ajustar la altura del textarea cuando se modifica su valor.
     document.getElementById('floatingTextarea').addEventListener('input', adjustTextareaHeight);
-
-    // Se crea el event listener para el on submit del formulario
+    // Añade un event listener para el evento submit del formulario.
     const form = document.querySelector(".add-board-form");
     form.addEventListener('submit', (event) => {
-        addBoard(event);
+        addBoard(event); // Llama a la función addBoard cuando se envía el formulario.
     })
-
-    // Funcionalidad para volver a la homepage
+    // Funcionalidad para regresar a la página de inicio.
     document.getElementById('returnButton').addEventListener('click', function () {
-        window.location.href = "homepage.html";
+        window.location.href = "homepage.html"; // Redirige a la página de inicio cuando se hace clic en el botón de retorno.
+    });
+    document.getElementById('inputFile').addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result;
+                // Aquí puedes usar base64String, por ejemplo, para mostrar la imagen en una etiqueta <img>
+                document.getElementById('preview').src = base64String;
+                // También puedes enviar base64String al servidor, almacenarlo en localStorage, etc.
+            };
+            reader.readAsDataURL(file);
+        }
     });
 });
-
-// Función para reajustar la altura del textarea
+// Función para ajustar la altura del textarea dinámicamente según el contenido.
 function adjustTextareaHeight() {
     const textarea = document.getElementById('floatingTextarea');
-    textarea.style.height = 'auto'; // Reset the height to auto
-    textarea.style.height = textarea.scrollHeight + 'px'; // Set the height to fit the content
+    textarea.style.height = 'auto'; // Resetea la altura a auto.
+    textarea.style.height = textarea.scrollHeight + 'px'; // Ajusta la altura para que se ajuste al contenido.
 }
-
-
-
