@@ -1,28 +1,37 @@
-document.addEventListener("DOMContentLoaded", function () {
-    //En caso de existir se elimina la sesión actual.
-    if (sessionStorage.getItem('session')) {
-        sessionStorage.removeItem('session');
-    }
-    if (sessionStorage.getItem('boards')) {
-        sessionStorage.removeItem('boards');
-    }
-    //Login
-    document.getElementById('login').addEventListener("click", function (evt) {
+document.addEventListener("DOMContentLoaded", function () {   
+    document.getElementById('createBoard').addEventListener("click", function (evt) {
         evt.preventDefault();
-        let emailValue = document.getElementById('inputEmail').value;
-        let passwordValue = document.getElementById('inputPassword').value;
+        let titleValue = document.getElementById('title').value;
+        let descriptionValue = document.getElementById('description').value;
+        let memberValue = document.getElementById('members').value;
+        let IMG64 = null;
+
+        document.getElementById('image').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    IMG64 = event.target.result;
+                    console.log(IMG64);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         // Validar que los campos requeridos no estén vacíos
-        if (!emailValue || !passwordValue) {
+        if (!titleValue || !descriptionValue || !imageValue || !memberValue) {
             document.getElementById('error').innerHTML = "Por favor, completa todos los campos requeridos.";
             return; // Detener el flujo de la función si hay campos vacíos
         }
 
         let data = {
-            email: emailValue,
-            password: passwordValue
+            title: titleValue,
+            description: descriptionValue,
+            image: imageValue,
+            members:[] 
         };
-        fetch("http://localhost:5000/user/login", {
+
+        fetch("http://localhost:5000/board/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)

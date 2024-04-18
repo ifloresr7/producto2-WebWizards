@@ -18,18 +18,23 @@
                     <input type="text" class="form-control" id="title" placeholder="" name="title" required>
                     <label for="title">Título</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-3">
                     <textarea class="form-control" placeholder="" id="description" name="description" rows="1" required></textarea>
                     <label for="description">Descripción</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" id="members" name="members">
+                    <label for="members">Miembros</label>
                 </div>
                 <div class="mb-3 mt-3">
                     <label for="image" class="form-label">Imagen de portada</label>
                     <input class="form-control" type="file" id="image" name="image" accept="image/*">
                   </div>
                 <div class="add-board-buttons-section">
-                    <button type="submit" class="btn btn-primary">Crear</button>
+                    <button type="submit" id="createBoard" class="btn btn-primary">Crear</button>
                     <button id="returnButton" type="button" onclick="goIndex()" class="btn btn-secondary">Cancelar</button>
                 </div>
+                <img id="preview" href>
               </form>
         </main>
         <div id="footer-container"></div>
