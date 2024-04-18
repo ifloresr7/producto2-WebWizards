@@ -44,7 +44,7 @@ const createUser = async (req, res) => {
     }
 }
 
-const loginUser = async (req, res, next) => {
+const loginUser = async (req, res) => {
     console.log("entra al login")
     try {
         const { email, password } = req.body
@@ -62,18 +62,13 @@ const loginUser = async (req, res, next) => {
 
         const user = response.data.data.loginUser
 
-        console.log("el user es : ", user)
-
         if (response.data.errors) {
-            res.status(400).send('Error al iniciar sesión')
+            res.status(400).send('Error al iniciar sesión: El usuaurio no existe o la contraseña es incorrecta')
         }
 
         // Crear autentificación usuario con JWT
 
-
-        req.userData = user
-        next()
-
+        res.status(200).json({ data: user })
     } catch(error) {
         console.log(error)
         res.status(400).send('Error al iniciar sesión')

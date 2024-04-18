@@ -1,3 +1,5 @@
+const queries = require("../services/queries")
+
 const createBoard = async (req, res) => {
     const { title, description, members } = req.body
 
@@ -25,31 +27,25 @@ const createBoard = async (req, res) => {
 }
 
 const getBoards = async (req, res) => {
-    const { id } = req.userData
+    const { id } = req.body
 
-    // const query = `
-    //     query GetBoards($id: ID!) {
-    //         getBoards(id: $id) {
-    //             title
-    //             description
-    //         }
-    //     }
-    // `
+    const query = queries.getBoardsByID
 
-    // const variables = { id }
+    const variables = { id }
 
-    // const response = await axios.post('http://localhost:5000/graphql', {
-    //     query,
-    //     variables
-    // })
+    const response = await axios.post('http://localhost:5000/graphql', {
+        query,
+        variables
+    })
 
-    // if (response.data.errors) {
-    //     res.status(400).send('Error obteniendo boards')
-    // }
+    if (response.data.errors) {
+        res.status(400).send('Error obteniendo boards')
+    }
 
-    // res.status(200).json(response.data.data.getBoards)
+    const boards = response.data.data.getBoardsByID
 
-    res.status(200).json({ message: 'Se retorna el usuario', user: req.userData })
+
+    res.status(200).json({ data: boards })
 
 }
 

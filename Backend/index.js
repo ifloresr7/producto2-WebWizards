@@ -5,6 +5,7 @@ const userRouter = require('./src/routes/user')
 const { ApolloServer } = require('apollo-server-express')
 const { typeDefs, mergedResolvers } = require('./src/graphql')
 const cors = require('cors')
+const boardRouter = require('./src/routes/board')
 
 dotenv.config()
 const app = express()
@@ -22,9 +23,9 @@ async function startApolloServer(typeDefs, resolvers) {
 
 startApolloServer(typeDefs, mergedResolvers)
 
-
-
 app.use('/user', userRouter)
+
+app.use('/board', boardRouter)
 
 app.listen(config.port, () => {
     console.log(`Example app listening at http://localhost:${config.port}`)
