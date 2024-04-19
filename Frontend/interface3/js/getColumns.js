@@ -3,8 +3,16 @@ import { deletePopUp } from "./deletePopUp.js";
 import { newTaskPopUp } from "./newTaskPopUp.js";
 
 export function dynamicColumn() {
-
     const boardId = new URLSearchParams(window.location.search).get('boardId');
+    console.log(boardId)
+
+
+
+
+
+
+
+
 
     const alltasks = JSON.parse(sessionStorage.getItem("tasks"));
     const tasks = alltasks.filter(task => task.boardId === boardId);

@@ -21,6 +21,7 @@ const getDataByBoardID = `
         getDataByBoardID(id: $id) {
             title
             description
+            image
             members {
                 id
                 email
@@ -29,7 +30,6 @@ const getDataByBoardID = `
                 id
                 title
                 description
-                image
                 members {
                     id
                     email
