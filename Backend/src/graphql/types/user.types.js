@@ -15,7 +15,7 @@ const userTypeDefs = `
     }
 
     type Mutation {
-        addUser(UserInput: UserInput!): String
+        addUser(UserInput: UserInput!): User
     }
 `
 

@@ -1,6 +1,9 @@
 const addUser = `
   mutation($userInput: UserInput!) {
-    addUser(UserInput: $userInput)
+    addUser(UserInput: $userInput){
+      id
+      email
+    }
   }
 `
 

@@ -41,7 +41,7 @@ const userResolvers = {
             try {
                 const user = await User.create({ email, password })
                 user.save()
-                return "Usuario creado correctamente";
+                return user;
             } catch(error) {
                 console.log(error)
                 throw new Error('Error creating user')
