@@ -38,7 +38,7 @@ const createUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-    console.log("entra al login")
+
     try {
         const { email, password } = req.body
 
@@ -47,6 +47,8 @@ const loginUser = async (req, res) => {
         const variables = { 
             userInput: {email, password }
         }
+
+        console.log(variables)
 
         const response = await axios.post(`${config.domain}graphql`, {
             query,
@@ -63,7 +65,7 @@ const loginUser = async (req, res) => {
 
         return res.status(200).json({ data: user })
     } catch(error) {
-        console.log(error)
+        console.log("error al iniciar sesión")
         return res.status(400).send('Error al iniciar sesión')
     }
 }

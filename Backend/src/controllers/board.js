@@ -1,13 +1,19 @@
 const axios = require('axios')
 const mutations = require('../services/mutations')
 const queries = require('../services/queries')
-const { getBoard } = require('../services')
+const { getBoard, getUserIdByEmail } = require('../services')
 const config = require('../config')
 
 const createBoard = async (req, res) => {
     try {
         const { title, description, members, tasks, image } = req.body
     
+        let membersIds = []
+        if (members.length > 0) {
+            //Se recupera el id de usuario mediante el email 
+            membersIds = await getUserIdByEmail(members)
+        }
+
         const mutation = mutations.addBoard
     
         const variables = {
@@ -15,7 +21,7 @@ const createBoard = async (req, res) => {
                 title, 
                 description, 
                 tasks,
-                members,
+                members: membersIds,
                 image       
             }
         }
