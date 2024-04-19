@@ -1,6 +1,6 @@
 export function getAllTasks(boardId) {
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:5000/board/" + boardId)
+        fetch("https://3ckwp3-5000.csb.app/board/" + boardId)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -24,7 +24,7 @@ export function getAllTasks(boardId) {
 export function addTask(data){
     console.log(data);
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:5000/task/create", {
+        fetch("https://3ckwp3-5000.csb.app/task/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -46,7 +46,7 @@ export function addTask(data){
 
 export function deleteTask(id){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:5000/task/delete?taskId=" + id, {
+        fetch("https://3ckwp3-5000.csb.app/task/delete?taskId=" + id, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         })

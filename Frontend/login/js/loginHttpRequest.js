@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             email: emailValue,
             password: passwordValue
         };
-        fetch("http://localhost:5000/user/login", {
+        fetch("https://3ckwp3-5000.csb.app/user/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
