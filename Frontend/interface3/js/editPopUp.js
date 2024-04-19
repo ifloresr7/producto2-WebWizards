@@ -2,117 +2,92 @@ import { dynamicColumn } from "./getTasksColumns.js";
 import { colours } from "../../constants/colors.js";
 import { changeColour } from "./newTaskPopUp.js";
 
-export function editPopUp(getID) {
-    const tasks = JSON.parse(sessionStorage.getItem("tasks"));
-    tasks.forEach(item => {
-        if (item.id == getID) {
-            let modalDiv = document.getElementById('modalDiv');
-            // Se le añade contenido al modal con la info de la tarea
-            const modalContent = `
-                <div id="modal" class="modal" tabindex="-1" style="display: block;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header edit-modal-header">
-                                <h1 contenteditable="true" id="titleTask">${item.title}</h1>
-                                <div class="input-group" id="edit-colour-select">
-                                    <span id="colour-shade" class="input-group-text bg-light"></span>
-                                    <select id="colour-select" class="form-select form-select-sm" aria-label=".form-select-sm example" data-previous-colour="light" name="colour">
-                                        <option value="${colours.light.bsName}">${colours.light.name}</option>
-                                        <option value="${colours.primary.bsName}">${colours.primary.name}</option>
-                                        <option value="${colours.success.bsName}">${colours.success.name}</option>
-                                        <option value="${colours.danger.bsName}">${colours.danger.name}</option>
-                                        <option value="${colours.warning.bsName}">${colours.warning.name}</option>
-                                        <option value="${colours.info.bsName}">${colours.info.name}</option>
-                                        <option value="${colours.secondary.bsName}">${colours.secondary.name}</option>
-                                        <option value="${colours.dark.bsName}">${colours.dark.name}</option>
-                                    </select>
-                                </div>
-                                <button type="button" class="btn-close closeButton" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="task-info">
-                                    <div class="inline">
-                                        <p>Fecha límite:</p>
-                                        <input type="datetime-local" class="date-input" id="date" value="${item.endTime}">
-                                    </div>
-                                    <div class="inline">
-                                        <p>Descripción:</p>
-                                        <h2 contenteditable="true" id="description">${item.description}</h2>
-                                    </div>
-                                    <div class="inline">
-                                        <p>Participantes:</p>
-                                        <h2 contenteditable="true" id="members">${item.members}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary saveButton">Guardar Cambios</button>
-                            </div>
+export function editPopUp(item) {
+    let memberTask = "";
+    item.members.forEach(member => {
+        memberTask = `${member.email},`;
+    });
+    document.getElementById('modalDiv').innerHTML = `
+    <div id="modal" class="modal" tabindex="-1" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar tarea:</h5>
+                    <button type="button" class="btn-close closeButton" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="modal-body new-task-form">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="" value="${item.title}" name="title" required>
+                        <label for="floatingInput">Título</label>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="" id="floatingTextarea" name="description" rows="1" required>${item.description}</textarea>
+                        <label for="floatingTextarea">Descripción</label>
+                    </div>
+                    <div class="date-color-wrapper">
+                        <div class="input-form">
+                            <label>Fecha límite</label>
+                            <input class="date-input" required type="datetime-local" id="endTime" value="2023-01-01T10:10" name="endTime"/>
+                        </div>
+                        <div class="input-group">
+                            <span id="colour-shade" class="input-group-text bg-light"></span>
+                            <select id="colour-select" class="form-select form-select-sm" aria-label=".form-select-sm example" data-previous-colour="light" name="colour">
+                                <option selected value="${colours.light.bsName}">${colours.light.name}</option>
+                                <option value="${colours.primary.bsName}">${colours.primary.name}</option>
+                                <option value="${colours.success.bsName}">${colours.success.name}</option>
+                                <option value="${colours.danger.bsName}">${colours.danger.name}</option>
+                                <option value="${colours.warning.bsName}">${colours.warning.name}</option>
+                                <option value="${colours.info.bsName}">${colours.info.name}</option>
+                                <option value="${colours.secondary.bsName}">${colours.secondary.name}</option>
+                                <option value="${colours.dark.bsName}">${colours.dark.name}</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            modalDiv.innerHTML = modalContent;
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="" name="members" required>
+                        <label for="floatingInput">${memberTask}</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary saveButton">Editar tarea</button>
+                    </div>
+                </form>  
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+    `;
 
-            // Se marca el color selected que venía en la tarea
-            const colourSelector = document.getElementById("colour-select");
-            const colourSelectOptions = Array.from(colourSelector.children);
-            colourSelectOptions.forEach(option => {
-                if (option.value === item.colour) {
-                    option.selected = true
-                }
-            })
-
-            //Se pinta la etiqueta del color select
-            const colourShade = document.getElementById("colour-shade");
-            colourShade.classList.remove(`bg-light`)
-            colourShade.classList.add(`bg-${colours[item.colour].bsName}`);
-            colourSelector.dataset.previousColour = item.colour;
-            
-
-            //Se añade la funcionalidad a los botones de cerrar
-            document.querySelectorAll('.closeButton').forEach(button => {
-                button.addEventListener('click', () => {
-                    document.getElementById('modal').remove();
-                    dynamicColumn();
-                });
-            });
-
-            //Se añade la funcionalidad al botón de guardar
-            document.querySelectorAll('.saveButton').forEach(button => {
-                button.addEventListener('click', () => {
-                    try {
-                        const index = tasks.findIndex(item => item.id === getID);
-                        if (index !== -1) {
-                            // Si se encuentra el elemento, realiza la edición
-                            const title = document.getElementById("titleTask").textContent;
-                            const description = document.getElementById("description").textContent;
-                            const date = document.getElementById("date").value;
-                            const members = document.getElementById("members").textContent;
-                            const colour = document.getElementById("colour-select").value;
-
-                            tasks[index].title = title;
-                            tasks[index].description = description;
-                            tasks[index].endTime = date;
-                            tasks[index].members = members;
-                            tasks[index].colour = colour;
-                            // Guarda el array actualizado en el almacenamiento local
-                            sessionStorage.setItem("tasks", JSON.stringify(tasks));
-                        } else {
-                            console.log("No se encontró ningún elemento con el ID proporcionado.");
-                        }
-                        dynamicColumn();
-                    } catch (error) {
-                        console.log(error);
-                    } finally {
-                        document.getElementById('modal').remove();
-                    }
-                });
-            });
+    // Se marca el color selected que venía en la tarea
+    const colourSelector = document.getElementById("colour-select");
+    const colourSelectOptions = Array.from(colourSelector.children);
+    colourSelectOptions.forEach(option => {
+        if (option.value === item.colour) {
+            option.selected = true
         }
+    })
+
+    //Se pinta la etiqueta del color select
+    const colourShade = document.getElementById("colour-shade");
+    colourShade.classList.remove(`bg-light`)
+    colourShade.classList.add(`bg-${colours[item.colour].bsName}`);
+    colourSelector.dataset.previousColour = item.colour;
+    
+
+    //Se añade la funcionalidad a los botones de cerrar
+    document.querySelectorAll('.closeButton').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('modalDiv').innerHTML = "";
+            dynamicColumn();
+        });
     });
 
+    //Se añade la funcionalidad al botón de guardar
+    document.querySelectorAll('.saveButton').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('modalDiv').innerHTML = "";
+            dynamicColumn();
+        });
+    });
     changeColour();
 }

@@ -5,7 +5,6 @@ export function getBoards() {
             if (dataString !== null) {
                 let parsedData = JSON.parse(dataString);
                 if (parsedData && parsedData.data && parsedData.data.id) {
-                    console.log(parsedData.data.id);
                     fetch("http://localhost:5000/board/get-boards?id=" + parsedData.data.id, {
                         method: "GET",
                         headers: { "Content-Type": "application/json" },

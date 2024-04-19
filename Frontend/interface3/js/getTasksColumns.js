@@ -34,10 +34,16 @@ function generateTasks(tasks){
             newTask.setAttribute('id', objeto.id);
             newTask.classList.add('task', objeto.status);
             const iconsColour = objeto.colour === 'warning' || objeto.colour === 'light' ? '-dark' : '-light' 
-            let memberTask;
+            let memberTask = '';
+            
             objeto.members.forEach(member => {
-                memberTask = `<p class="card-members">Email: ${member.email}</p>`;
+                memberTask += `<p class="card-members">Email: ${member.email}</p>`;
             });
+
+            if(memberTask == ''){
+                memberTask = `<p class="card-members">Sin miembros.</p>`;
+            }
+
             newTask.innerHTML = `
                 <div class="card text-bg-${objeto.colour} mb-3" style="max-width: 18rem;">
                     <div class="card-header">
@@ -74,7 +80,8 @@ function generateTasks(tasks){
         icon.addEventListener('click', () => {
             const parentTag = icon.closest('.task');
             const parentID = parentTag.id;
-            deletePopUp(parentID);
+            const task = tasks.find(task => task.id === parentID);
+            deletePopUp(task);
         });
     });
 
@@ -93,7 +100,8 @@ function generateTasks(tasks){
         icon.addEventListener('click', () => {
             const parentTag = icon.closest('.task');
             const parentID = parentTag.id;
-            editPopUp(parentID);
+            const task = tasks.find(task => task.id === parentID);
+            editPopUp(task);
         });
     });
 

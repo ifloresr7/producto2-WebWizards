@@ -38,19 +38,28 @@ export function createBoard() {
             return;
         }
 
-        if (!titleValue || !descriptionValue || !imageValue || !memberValue) {
+        if (!titleValue || !descriptionValue || !imageValue) {
             document.getElementById('error').innerHTML = "Por favor, completa todos los campos requeridos.";
             reject(new Error("Todos los campos son requeridos."));
             return;
         }
-
+        const membersArray = memberValue.split(',').map(email => email.trim());
+        const members = [parsedData.data.email];
+        membersArray.forEach(element => {
+            if(element != ""){
+                members.push(element);
+            }
+        });
         const data = {
             title: titleValue,
             description: descriptionValue,
             image: imageValue,
-            members: [parsedData.data.id],
-            tasks:[]
+            members: members,
+            tasks: []
         };
+
+        console.log(data);
+
         fetch("http://localhost:5000/board/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

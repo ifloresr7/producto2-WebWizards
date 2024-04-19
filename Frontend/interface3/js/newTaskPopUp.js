@@ -2,7 +2,7 @@ import { dynamicColumn } from "./getTasksColumns.js";
 import { colours } from "../../constants/colors.js";
 import { addTask } from "./HttpRequest.js";
 
-export function newTaskPopUp(getId) {
+export function newTaskPopUp(idBoard) {
     document.getElementById('modalDiv').innerHTML = `
     <div id="modal" class="modal" tabindex="-1" style="display: block;">
         <div class="modal-dialog">
@@ -60,7 +60,7 @@ export function newTaskPopUp(getId) {
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="" name="members" required>
+                        <input type="text" class="form-control" id="floatingInput" placeholder="" name="members">
                         <label for="floatingInput">Miembros</label>
                     </div>
                     <div class="modal-footer">
@@ -73,11 +73,10 @@ export function newTaskPopUp(getId) {
     </div>
     <div class="modal-backdrop fade show"></div>
     `;
-
     // Marca un status incial
-    if(getId == "columnPending"){
+    if(idBoard == "columnPending"){
         document.getElementById('pendingStatus').checked = true;
-    }else if(getId == "columnCurrent"){
+    }else if(idBoard == "columnCurrent"){
         document.getElementById('currentStatus').checked = true;
     }else{
         document.getElementById('completeStatus').checked = true;
@@ -87,7 +86,7 @@ export function newTaskPopUp(getId) {
 
     changeColour();
 
-    createTask();
+    createTask(idBoard);
 };
 
 // Funcionalidad para cerrar el modal
@@ -119,21 +118,27 @@ export function changeColour() {
     })
 }
 
-function createTask() {
+function createTask(idBoard) {
     const form = document.querySelector('.new-task-form');
     form.addEventListener('submit', (event) => {
         try {
             event.preventDefault();
-            console.log("formasda");
             // Crear el nuevo objeto taskData
+            const membersArray = event.target.members.value.split(",").map(email => email.trim());
+            const members = [];
+            membersArray.forEach(element => {
+                if(element != ""){
+                    members.push(element);
+                }
+            });
             const taskData = {
                 title: event.target.title.value,
                 description: event.target.description.value,
-                order: 10000,
                 endTime: event.target.endTime.value,
+                order: getOrder(idBoard),
                 status: event.target.status.value,
                 colour: event.target.colour.value,
-                members: event.target.members.value.split(","),
+                members: members,
                 boardId: new URLSearchParams(window.location.search).get('boardId'),
             };
             addTask(taskData);
@@ -141,10 +146,22 @@ function createTask() {
         } catch (error) {
             console.log(error);
         } finally {
-            document.getElementById('modal').remove();
+            document.getElementById('modalDiv').innerHTML = "";
         }
     });
 
     dynamicColumn();
+}
+
+function getOrder(idBoard){
+    let counts;
+    if(idBoard == "columnPending"){
+        counts = document.querySelectorAll('.task.pending').length;
+    }else if(idBoard == "columnCurrent"){
+        counts = document.querySelectorAll('.task.current').length;
+    }else{
+        counts = document.querySelectorAll('.task.complete').length;
+    }
+    return counts;
 }
 

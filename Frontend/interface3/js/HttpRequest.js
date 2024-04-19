@@ -22,8 +22,8 @@ export function getAllTasks(boardId) {
 }
 
 export function addTask(data){
+    console.log(data);
     return new Promise((resolve, reject) => {
-        console.log("dwawad");
         fetch("http://localhost:5000/task/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -33,7 +33,28 @@ export function addTask(data){
             if (data.error) {
                 reject(data.error);
             } else {
-                // window.location.reload();
+                window.location.reload();
+                resolve();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            reject('Failed to fetch tasks');
+        });
+    });
+}
+
+export function deleteTask(id){
+    return new Promise((resolve, reject) => {
+        fetch("http://localhost:5000/task/delete?taskId=" + id, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+        })
+        .then(data => {
+            if (data.error) {
+                reject(data.error);
+            } else {
+                window.location.reload();
                 resolve();
             }
         })
