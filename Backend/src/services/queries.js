@@ -30,6 +30,10 @@ const getDataByBoardID = `
                 id
                 title
                 description
+                status
+                order
+                colour
+                endTime
                 members {
                     id
                     email

@@ -1,29 +1,26 @@
 import { editPopUp } from "./editPopUp.js";
 import { deletePopUp } from "./deletePopUp.js";
 import { newTaskPopUp } from "./newTaskPopUp.js";
+import { getAllTasks } from "./HttpRequest.js";
 
 export function dynamicColumn() {
     const boardId = new URLSearchParams(window.location.search).get('boardId');
-    console.log(boardId)
+    getAllTasks(boardId)
+        .then(data => {
+            generateTasks(data.data.tasks);
+        })
+        .catch(error => {
+            console.error('Error capturando los datos:', error);
+        });
+}
 
-
-
-
-
-
-
-
-
-    const alltasks = JSON.parse(sessionStorage.getItem("tasks"));
-    const tasks = alltasks.filter(task => task.boardId === boardId);
-
+function generateTasks(tasks){
     let columnPending = document.getElementById('pendingTasks');
     let columnCurrent = document.getElementById('currentTasks');
     let columnComplete = document.getElementById('completeTasks');
     columnPending.innerHTML = "";
     columnCurrent.innerHTML = "";
     columnComplete.innerHTML = "";
-
     tasks.forEach(objeto => {
         if (objeto.status == "pending") {
             createTask(columnPending);
@@ -36,9 +33,11 @@ export function dynamicColumn() {
             var newTask = document.createElement('div');
             newTask.setAttribute('id', objeto.id);
             newTask.classList.add('task', objeto.status);
-
             const iconsColour = objeto.colour === 'warning' || objeto.colour === 'light' ? '-dark' : '-light' 
-
+            let memberTask;
+            objeto.members.forEach(member => {
+                memberTask = `<p class="card-members">Email: ${member.email}</p>`;
+            });
             newTask.innerHTML = `
                 <div class="card text-bg-${objeto.colour} mb-3" style="max-width: 18rem;">
                     <div class="card-header">
@@ -52,10 +51,9 @@ export function dynamicColumn() {
                     <div class="card-body">
                         <h1 class="card-title">${objeto.title}</h1>
                         <p class="card-text">${objeto.description}</p>
-                        <p class="card-members">${objeto.members}</p>
+                        ${memberTask}
                     </div>
                 </div>`;
-
             column.appendChild(newTask);
         }
     });
@@ -115,3 +113,4 @@ export function dynamicColumn() {
         }
     });
 }
+

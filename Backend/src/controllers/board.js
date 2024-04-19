@@ -71,9 +71,7 @@ const getBoards = async (req, res) => {
 const getBoardData = async (req, res) => {
     try {
         const id = req.params.id
-    
         const board = await getBoard(id)
-
         return res.status(200).json({ data: board })
     } catch(error) {
         console.log(error)

@@ -1,4 +1,4 @@
-import { dynamicColumn } from "./getColumns.js";
+import { dynamicColumn } from "./getTasksColumns.js";
 import { colours } from "../../constants/colors.js";
 import { changeColour } from "./newTaskPopUp.js";
 
@@ -6,8 +6,7 @@ export function editPopUp(getID) {
     const tasks = JSON.parse(sessionStorage.getItem("tasks"));
     tasks.forEach(item => {
         if (item.id == getID) {
-            let taskModal = document.getElementById('taskModal');
-
+            let modalDiv = document.getElementById('modalDiv');
             // Se le añade contenido al modal con la info de la tarea
             const modalContent = `
                 <div id="modal" class="modal" tabindex="-1" style="display: block;">
@@ -55,7 +54,7 @@ export function editPopUp(getID) {
                 </div>
             `;
             
-            taskModal.innerHTML = modalContent;
+            modalDiv.innerHTML = modalContent;
 
             // Se marca el color selected que venía en la tarea
             const colourSelector = document.getElementById("colour-select");

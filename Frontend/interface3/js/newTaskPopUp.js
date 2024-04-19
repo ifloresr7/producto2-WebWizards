@@ -1,9 +1,10 @@
-import { dynamicColumn } from "./getColumns.js";
+import { dynamicColumn } from "./getTasksColumns.js";
 import { colours } from "../../constants/colors.js";
+import { addTask } from "./HttpRequest.js";
 
 export function newTaskPopUp(getId) {
-    document.getElementById('taskModal').innerHTML = `
-    <section id="modal" class="modal" tabindex="-1" style="display: block;">
+    document.getElementById('modalDiv').innerHTML = `
+    <div id="modal" class="modal" tabindex="-1" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -42,7 +43,7 @@ export function newTaskPopUp(getId) {
                     <div class="date-color-wrapper">
                         <div class="input-form">
                             <label>Fecha límite</label>
-                            <input class="date-input" required type="datetime-local" id="newEndTime" value="2023-01-01T10:10" name="endTime"/>
+                            <input class="date-input" required type="datetime-local" id="endTime" value="2023-01-01T10:10" name="endTime"/>
                         </div>
                         <div class="input-group">
                             <span id="colour-shade" class="input-group-text bg-light"></span>
@@ -69,7 +70,9 @@ export function newTaskPopUp(getId) {
                 </form>  
             </div>
         </div>
-    </section>`;
+    </div>
+    <div class="modal-backdrop fade show"></div>
+    `;
 
     // Marca un status incial
     if(getId == "columnPending"){
@@ -91,7 +94,7 @@ export function newTaskPopUp(getId) {
 function closeModal() {
     document.querySelectorAll('.closeButton').forEach(button => {
         button.addEventListener('click', () => {
-            document.getElementById('modal').remove();
+            document.getElementById('modalDiv').innerHTML = "";
             dynamicColumn();
         });
     });
@@ -116,38 +119,24 @@ export function changeColour() {
     })
 }
 
-// Funcionalidad para crear la tarea (subelemento)
 function createTask() {
     const form = document.querySelector('.new-task-form');
-
     form.addEventListener('submit', (event) => {
         try {
             event.preventDefault();
-
-            // Obtener los datos existentes de sessionStorage
-            const existingTasksString = sessionStorage.getItem("tasks");
-            // Si no hay datos previamente guardados, inicializa existingTasks como un array vacío
-            let existingTasks = [];
-            if (existingTasksString) {
-                existingTasks = JSON.parse(existingTasksString);
-            }
-
+            console.log("formasda");
             // Crear el nuevo objeto taskData
             const taskData = {
-                id: (Math.random() * 10000).toString(),
                 title: event.target.title.value,
                 description: event.target.description.value,
+                order: 10000,
                 endTime: event.target.endTime.value,
                 status: event.target.status.value,
                 colour: event.target.colour.value,
-                members: event.target.members.value,
+                members: event.target.members.value.split(","),
                 boardId: new URLSearchParams(window.location.search).get('boardId'),
             };
-
-            // Agregar el nuevo objeto a existingTasks
-            existingTasks.push(taskData);
-            // Guardar existingTasks en sessionStorage
-            sessionStorage.setItem("tasks", JSON.stringify(existingTasks));
+            addTask(taskData);
             dynamicColumn();
         } catch (error) {
             console.log(error);
@@ -156,6 +145,6 @@ function createTask() {
         }
     });
 
-    // dynamicColumn();
+    dynamicColumn();
 }
 

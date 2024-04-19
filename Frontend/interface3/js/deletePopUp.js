@@ -1,12 +1,17 @@
-import { dynamicColumn } from "./getColumns.js";
+import { dynamicColumn } from "./getTasksColumns.js";
 
 export function deletePopUp(getID) {
     const tasks = JSON.parse(sessionStorage.getItem("tasks"));
     tasks.forEach(item => {
         if (item.id == getID) {
-            let taskModal = document.getElementById('taskModal');
+            let modalDiv1 = document.getElementById('modalDiv');
             // Crear el elemento div para el modal
-            var modalDiv = document.createElement("div");
+
+
+
+
+
+
             modalDiv.id = "modal";
             modalDiv.className = "modal";
             modalDiv.tabIndex = "-1";
@@ -61,8 +66,8 @@ export function deletePopUp(getID) {
             modalDialogDiv.appendChild(modalContentDiv);
             // Agregar el dialogo al modal
             modalDiv.appendChild(modalDialogDiv);
-            // Agregar el modal al cuerpo del taskModal
-            taskModal.appendChild(modalDiv);
+            // Agregar el modal al cuerpo del modalDiv
+            modalDiv1.appendChild(modalDiv);
             document.querySelectorAll('.closeButton').forEach(button => {
                 button.addEventListener('click', () => {
                     document.getElementById('modal').remove();

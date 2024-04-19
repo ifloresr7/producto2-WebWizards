@@ -1,4 +1,4 @@
-import { dynamicColumn } from "./getColumns.js";
+import { dynamicColumn } from "./getTasksColumns.js";
 
 dynamicColumn();
 
