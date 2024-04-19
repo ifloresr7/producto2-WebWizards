@@ -18,8 +18,6 @@ const createtask = async (req, res, next) => {
         const variables = { 
             taskInput: { title, description, status, order, colour, endTime, members: membersIds }
         }
-
-        console.log(`${config.domain}graphql`)
     
         const response = await axios.post(`${config.domain}graphql`, {
             query: mutation,
