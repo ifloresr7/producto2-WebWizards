@@ -29,6 +29,7 @@ const getDataByBoardID = `
                 id
                 title
                 description
+                image
                 members {
                     id
                     email

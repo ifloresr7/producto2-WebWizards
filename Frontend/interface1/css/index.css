@@ -87,3 +87,7 @@ main {
     transition: all 0.4s;
   }
 }
+
+.modalDiv{
+  display: none;
+}

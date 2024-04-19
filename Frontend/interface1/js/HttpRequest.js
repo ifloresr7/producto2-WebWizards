@@ -37,10 +37,36 @@ export function getBoards() {
     });
 }
 
-export function getBoardByID(id) {
+export function getBoardID(id) {
     return new Promise((resolve, reject) => {
         fetch("http://localhost:5000/board/" + id, {
             method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("La solicitud no fue exitosa.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    reject(data.error);
+                } else {
+                    resolve(data.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                reject(error);
+            });
+    });
+}
+
+export function deleteBoardID(id) {
+    return new Promise((resolve, reject) => {
+        fetch("http://localhost:5000/board/delete?boardId=" + id, {
+            method: "DELETE",
             headers: { "Content-Type": "application/json" },
         })
             .then(response => {

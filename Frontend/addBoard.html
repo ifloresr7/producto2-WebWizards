@@ -16,21 +16,22 @@
             <form id="add-board-form" class="add-board-form">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="title" placeholder="" name="title">
-                    <label for="title">Título</label>
+                    <label for="title">Título*</label>
                 </div>
                 <div class="form-floating mb-3">
                     <textarea class="form-control" placeholder="" id="description" name="description" rows="1"></textarea>
-                    <label for="description">Descripción</label>
+                    <label for="description">Descripción*</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" id="members" name="members">
-                    <label for="members">Miembros</label>
+                    <input class="form-control" type="text" placeholder=""  id="members" name="members">
+                    <label for="members">Miembros*</label>
                 </div>
                 <div class="mb-3 mt-3">
-                    <label for="image" class="form-label">Imagen de portada (Max 100Kb)</label>
+                    <label for="image" class="form-label">Imagen de portada (Max 80KB)*</label>
                     <input class="form-control" type="file" id="image" name="image" accept="image/*">
                 </div>
                 <p id="error" class="error"></p>
+                <span>* Campo requerido.</span>
                 <div class="add-board-buttons-section">
                     <button type="submit" id="createBoard" class="btn btn-primary">Crear</button>
                     <button id="returnButton" type="button" onclick="goIndex()" class="btn btn-secondary">Cancelar</button>

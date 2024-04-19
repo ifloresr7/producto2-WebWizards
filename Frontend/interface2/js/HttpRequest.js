@@ -21,8 +21,8 @@ export function createBoard() {
         const file = imageInput.files[0];
         let imageValue = null;
         if (file) {
-            if (file.size > 100 * 1024) { // Size in bytes, 100KB = 100 * 1024 bytes
-                document.getElementById('error').innerHTML = "La imagen seleccionada excede el tamaño máximo permitido de 100KB.";
+            if (file.size > 80 * 1024) { // Size in bytes, 100KB = 100 * 1024 bytes
+                document.getElementById('error').innerHTML = "La imagen seleccionada excede el tamaño máximo permitido de 80KB.";
                 return;
             }
             try {

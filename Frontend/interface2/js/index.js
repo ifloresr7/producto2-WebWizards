@@ -12,9 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }).catch(error => {
             console.error('Error al crear el tablero:', error);
             // Aquí puedes manejar el error de alguna manera, como mostrar un mensaje al usuario.
-        }).finally(() => {
-            window.location.href = "index.html";            
-        });
+        })
     });
 
     document.getElementById('returnButton').addEventListener('click', function () {
