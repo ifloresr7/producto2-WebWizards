@@ -29,11 +29,6 @@ input taskInput {
     endTime: DateTime!,
     members: [ID]!,
 }
-
-type Query {
-
-}
-
 type Mutation {
     addTask(taskInput: taskInput!): ID
     deleteTask(id: ID!): String

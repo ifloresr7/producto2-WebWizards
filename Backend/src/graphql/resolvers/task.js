@@ -3,8 +3,6 @@ const User = require("../../db/models/user.model")
 const Task = require("../../db/models/task.model")
 
 const task = {
-    Query: {
-    },
     Task: {
         members: async (parent, args, context) => {
           const memberIds = parent.members;
