@@ -2,6 +2,7 @@ const axios = require('axios')
 const mutations = require('../services/mutations')
 const queries = require('../services/queries')
 const { getBoard } = require('../services')
+const config = require('../config')
 
 const createBoard = async (req, res) => {
     try {
@@ -19,7 +20,7 @@ const createBoard = async (req, res) => {
             }
         }
     
-        const response = await axios.post('http://localhost:5000/graphql', {
+        const response = await axios.post(`${config.domain}graphql`, {
             query: mutation,
             variables
         })
@@ -49,7 +50,7 @@ const getBoards = async (req, res) => {
 
         const variables = { id }
         
-        const response = await axios.post('http://localhost:5000/graphql', {
+        const response = await axios.post(`${config.domain}graphql`, {
             query,
             variables
         })
@@ -88,7 +89,7 @@ const addtaskToBoard = async (req, res) => {
 
         const variables = { boardId, taskId }
 
-        const response = await axios.post('http://localhost:5000/graphql', {
+        const response = await axios.post(`${config.domain}graphql`, {
             query: mutation,
             variables
         })
@@ -112,7 +113,7 @@ const deleteBoard = async (req, res) => {
 
         const variables = { id: boardId }
     
-        const response = await axios.post('http://localhost:5000/graphql', {
+        const response = await axios.post(`${config.domain}graphql`, {
             query: mutation,
             variables
         })

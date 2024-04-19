@@ -1,5 +1,6 @@
 const axios = require("axios")
 const queries = require("./queries")
+const config = require("../config")
 
 
 getBoard = async (boardId) => {
@@ -8,7 +9,7 @@ getBoard = async (boardId) => {
 
     const variables = { id: boardId }
 
-    const response = await axios.post('http://localhost:5000/graphql', {
+    const response = await axios.post(`${config.domain}graphql`, {
         query,
         variables
     })
@@ -23,12 +24,12 @@ getBoard = async (boardId) => {
 }
 
 getUserIdByEmail = async (membersEmail) => {
-
+    
     try {
         const promises = membersEmail.map(email => {
                 
             const getUserId = queries.getUserByEmail
-            return axios.post('http://localhost:5000/graphql', {
+            return axios.post(`${config.domain}graphql`, {
                 query: getUserId,
                 variables: { email }
             }).then(response => {
@@ -36,7 +37,6 @@ getUserIdByEmail = async (membersEmail) => {
                 return response.data.data.getUserByEmail.id
             }).catch(error => {
                 throw new Error("Error al obtener el id del usuario")
-                console.log("Error al obtener el id del usuario")
             })
         })
     

@@ -1,6 +1,7 @@
 const axios = require('axios')
 const queries = require('../services/queries')
 const mutations = require('../services/mutations')
+const config = require('../config')
 
 const createUser = async (req, res) => {
     try {
@@ -15,7 +16,7 @@ const createUser = async (req, res) => {
             userInput: { email, password }
         }
 
-        const response = await axios.post('http://localhost:5000/graphql', {
+        const response = await axios.post(`${config.domain}graphql`, {
             query: mutation,
             variables,
         })
@@ -47,7 +48,7 @@ const loginUser = async (req, res) => {
             userInput: {email, password }
         }
 
-        const response = await axios.post('http://localhost:5000/graphql', {
+        const response = await axios.post(`${config.domain}graphql`, {
             query,
             variables
         })
