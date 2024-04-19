@@ -7,14 +7,19 @@ const createtask = async (req, res, next) => {
     try {
         const { boardId, title, description, status, order, colour, endTime, members } = req.body
     
-        //Se recupera el id de usuario mediante el email
-        const membersIds = await getUserIdByEmail(members)
+        let membersIds = []
+        if (members.length > 0) {
+            //Se recupera el id de usuario mediante el email 
+            membersIds = await getUserIdByEmail(members)
+        }
         
         const mutation = mutations.addTask
     
         const variables = { 
             taskInput: { title, description, status, order, colour, endTime, members: membersIds }
         }
+
+        console.log(`${config.domain}graphql`)
     
         const response = await axios.post(`${config.domain}graphql`, {
             query: mutation,

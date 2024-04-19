@@ -24,10 +24,9 @@ getBoard = async (boardId) => {
 }
 
 getUserIdByEmail = async (membersEmail) => {
-    
+
     try {
         const promises = membersEmail.map(email => {
-                
             const getUserId = queries.getUserByEmail
             return axios.post(`${config.domain}graphql`, {
                 query: getUserId,
