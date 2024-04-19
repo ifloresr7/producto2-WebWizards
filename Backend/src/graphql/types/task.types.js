@@ -31,7 +31,7 @@ input taskInput {
 }
 
 type Query {
-    showTasks: [Task]
+
 }
 
 type Mutation {

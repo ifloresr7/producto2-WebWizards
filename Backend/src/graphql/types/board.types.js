@@ -19,7 +19,6 @@ const boardTypeDefs = `
         getBoardsByUserID (id: ID!): [Board]
         getDataByBoardID (id: ID!): Board
         getTasksInStatusWithIDBoard (status: Status!, id: ID!): [Task]
-        showBoards: [Board]
     }
     type Mutation {
         addBoard(boardInput: boardInput!): String

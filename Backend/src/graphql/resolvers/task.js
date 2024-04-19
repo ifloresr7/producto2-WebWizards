@@ -4,16 +4,6 @@ const Task = require("../../db/models/task.model")
 
 const task = {
     Query: {
-        showTasks: async () => {
-            try {
-                const tasks = await Task.find();
-                return tasks;
-              } catch (error) {
-                console.error("Error al obtener tareas:", error);
-                throw new Error('Error al obtener tareas');
-              }
-        },
-        
     },
     Task: {
         members: async (parent, args, context) => {

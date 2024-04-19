@@ -18,15 +18,6 @@ const boardResolvers = {
                 throw new Error('Error al obtener tableros por ID');
             }
         },
-        showBoards: async () => {
-            try {
-                const boards = await Board.find();
-                return boards;
-              } catch (error) {
-                console.error("Error al obtener tableros:", error);
-                throw new Error('Error al obtener tableros');
-              }
-        },
         getDataByBoardID: async (_, { id }) => {
             try {
                 const board = await Board.findById(id);
