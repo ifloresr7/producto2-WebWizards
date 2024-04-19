@@ -1,18 +1,19 @@
-const task = require("../graphql/resolvers/task")
-const { getBoard } = require("../services")
+const { getBoard, getUserIdByEmail } = require("../services")
 const mutations = require("../services/mutations")
 const axios = require('axios')
+const queries = require("../services/queries")
 
 const createtask = async (req, res, next) => {
     try {
         const { boardId, title, description, status, order, colour, endTime, members } = req.body
     
+        //Se recupera el id de usuario mediante el email
+        const membersIds = await getUserIdByEmail(members)
+        
         const mutation = mutations.addTask
-
-        console.log(req.body)
     
         const variables = { 
-            taskInput: { title, description, status, order, colour, endTime, members }
+            taskInput: { title, description, status, order, colour, endTime, members: membersIds }
         }
     
         const response = await axios.post('http://localhost:5000/graphql', {

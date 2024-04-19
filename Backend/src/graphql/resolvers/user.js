@@ -23,7 +23,15 @@ const userResolvers = {
               } catch (error) {
                 throw new Error(error.message);
               }
-        }
+        },
+        getUserByEmail: async (_, { email }) => {
+          try {
+            const user = await User.findOne({ email });
+            return user ? user : null;
+          } catch (error) {
+            throw new Error('Error al obtener usuario por email');
+          }
+        },
     },
     Mutation: {
         addUser: async (_, {UserInput}) => {

@@ -11,6 +11,7 @@ const userTypeDefs = `
     type Query {
         loginUser(userInput: UserInput!): User
         showUsers: [User]
+        getUserByEmail(email: String!): User
     }
 
     type Mutation {

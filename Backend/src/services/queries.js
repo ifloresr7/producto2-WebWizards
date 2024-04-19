@@ -6,6 +6,15 @@ const getUser = `
         }
     }
 `
+
+const getUserByEmail = `
+    query ($email: String!) {
+        getUserByEmail(email: $email) {
+            id
+        }
+    }
+`
+
 const getBoardsByUserID = `
     query($id: ID!) {
         getBoardsByUserID(id: $id) {
@@ -64,7 +73,8 @@ const queries = {
     getUser,
     getBoardsByUserID,
     getDataByBoardID,
-    getTasksInStatusWithIDBoard
+    getTasksInStatusWithIDBoard,
+    getUserByEmail
 }
 
 
