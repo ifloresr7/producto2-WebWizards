@@ -5,7 +5,7 @@ export function getBoards() {
             if (dataString !== null) {
                 let parsedData = JSON.parse(dataString);
                 if (parsedData && parsedData.data && parsedData.data.id) {
-                    fetch("https://3ckwp3-5000.csb.app/board/get-boards?id=" + parsedData.data.id, {
+                    fetch("http://localhost:5000/board/get-boards?id=" + parsedData.data.id, {
                         method: "GET",
                         headers: { "Content-Type": "application/json" },
                     })
@@ -38,7 +38,7 @@ export function getBoards() {
 
 export function getBoardID(id) {
     return new Promise((resolve, reject) => {
-        fetch("https://3ckwp3-5000.csb.app/board/" + id, {
+        fetch("http://localhost:5000/board/" + id, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         })
@@ -64,7 +64,7 @@ export function getBoardID(id) {
 
 export function deleteBoardID(id) {
     return new Promise((resolve, reject) => {
-        fetch("https://3ckwp3-5000.csb.app/board/delete?boardId=" + id, {
+        fetch("http://localhost:5000/board/delete?boardId=" + id, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         })

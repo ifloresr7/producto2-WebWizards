@@ -60,7 +60,7 @@ export function createBoard() {
 
         console.log(data);
 
-        fetch("https://3ckwp3-5000.csb.app/board/create", {
+        fetch("http://localhost:5000/board/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
